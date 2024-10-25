@@ -1,17 +1,24 @@
+# Use an official Python runtime as a base image
 FROM python:3.9-slim
 
-# Install curl
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-
-# Set up your application
+# Set the working directory in the container
 WORKDIR /app
-COPY requirements.txt .
 
-# Install dependencies
+# Copy requirements.txt into the container at /app
+COPY requirements.txt /app/
+
+# Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your application code to the container
-COPY ./src /app
+# Copy the rest of the application code into the container
+COPY . /app
 
-# Command to run your Flask app
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "0", "app:app"]
+# Expose port 5000 for Flask
+EXPOSE 5000
+
+# Set the Flask environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=development
+
+# Run the application
+CMD ["flask", "run", "--host=0.0.0.0"]
