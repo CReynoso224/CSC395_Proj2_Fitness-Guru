@@ -3,11 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Flask UI</title>
+    <style>
+        .page {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        p {
+            color: white;
+        }
+        body {
+            background-image: url('./images/conflicts.jpg');
+        }
+    </style>
 </head>
 <body>
-    <h1>Fitness Guru</h1>
-    <p>The app for all your health needs (We are not liable for any misinformation 
-you may or may not receive while using our services).</p>
+    <div id="page1" class="page active">
+        <style>
+            h1 {text-align: center;
+                color: white;}
+        </style>
+        <h1>Fitness Guru&trade; </h1>
+        <p>The app for all your health needs (We are not liable for any misinformation you may or may not receive while using our services).</p>
+        <button onclick="goToPage('page2')">Get Started!</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h1>Page 2</h1>
+        <p>This is the second page.</p>
+        <button onclick="goToPage('page3')">Next</button>
+        <button onclick="goToPage('page1')">Back</button>
+    </div>
+
+    <div id="page3" class="page">
+        <h1>Page 3</h1>
+        <p>This is the third page.</p>
+        <button onclick="goToPage('page2')">Back</button>
+    </div>
+
+    <script>
+        function goToPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
+
