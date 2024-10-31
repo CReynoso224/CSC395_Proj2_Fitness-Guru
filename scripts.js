@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // script.js
 function goToPage(pageId) {
     // Hide all pages
@@ -18,3 +19,6 @@ function toggleOtherInput() {
         otherInput.value = ''; // Clear input if "Other" is not selected
     }
 }
+=======
+#js stuff 
+>>>>>>> 3e60f9012f46ef9f99ec8bd167e5f4f8f76e8d94

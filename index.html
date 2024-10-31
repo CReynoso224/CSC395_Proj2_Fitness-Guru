@@ -19,16 +19,7 @@
         /* Container for the page */
         .page {
             display: none;
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            margin: 100px auto;
-            border-radius: 10px;
-            box-shadow: 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        /* Active page */
         .active {
             display: block;
         }
@@ -85,20 +76,8 @@
     </div>
 
     <div id="page2" class="page">
-        <h1>Welcome to Page 2</h1>
-        <p>This is the second page where you will continue your fitness journey.</p>
-
-    <label for="goals">Input Goal: (Choose All that Apply)</label>
-    <select id="goals" onchange="toggleOtherInput()">
-        <option value="">Select an option</option>
-        <option value="lose_weight">Lose Weight</option>
-        <option value="gain_muscle">Gain Muscle</option>
-        <option value="improve_flexibility">Improve Flexibility</option>
-        <option value="other">Other:</option>
-    </select>
-    
-    <input type="text" id="otherGoal" placeholder="Please specify..." style="display: none; margin-top: 10px;"/>
-
+        <h1>Page 2</h1>
+        <p>This is the second page.</p>
         <button onclick="goToPage('page3')">Next</button>
         <button onclick="goToPage('page1')">Back</button>
     </div>
