@@ -1,3 +1,5 @@
+# app.py
+
 from flask import Flask, render_template
 
 # Initialize the Flask application
@@ -16,3 +18,5 @@ def about():
 # Start the Flask application
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+
