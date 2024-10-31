@@ -19,16 +19,7 @@
         /* Container for the page */
         .page {
             display: none;
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            margin: 100px auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        /* Active page */
         .active {
             display: block;
         }
@@ -85,8 +76,8 @@
     </div>
 
     <div id="page2" class="page">
-        <h1>Welcome to Page 2</h1>
-        <p>This is the second page where you will continue your fitness journey.</p>
+        <h1>Page 2</h1>
+        <p>This is the second page.</p>
         <button onclick="goToPage('page3')">Next</button>
         <button onclick="goToPage('page1')">Back</button>
     </div>
@@ -97,16 +88,6 @@
         <button onclick="goToPage('page2')">Back</button>
     </div>
 
-    <script>
-        function goToPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Show the selected page
-            document.getElementById(pageId).classList.add('active');
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
-
