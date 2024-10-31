@@ -14,11 +14,15 @@
             background-size: cover;
             background-position: center;
             color: #333;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
         /* Container for the page */
         .page {
             display: none;
+            text-align: center;
         }
         .active {
             display: block;
@@ -70,14 +74,31 @@
 </head>
 <body>
     <div id="page1" class="page active">
-        <h1>Fitness Guru&trade; </h1>
-        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
-        <button onclick="goToPage('page2')">Get Started!</button>
+        <div class="center-wrapper">
+            <h1>Fitness Guru&trade;</h1>
+            <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
+            <button onclick="goToPage('page2')">Get Started!</button>
+        </div>
     </div>
 
     <div id="page2" class="page">
-        <h1>Page 2</h1>
-        <p>This is the second page.</p>
+        <h1>What are some of your goals here?</h1>
+        <p>Select one of the following options:</p>
+
+        <!-- Centering Wrapper for Dropdown and Textbox -->
+        <div class="dropdown-container">
+
+            <!-- Dropdown Menu -->
+            <select id="goalSelect" onchange="checkOtherOption()">
+                <option value="lose-weight">Lose Weight</option>
+                <option value="gain-muscle">Gain Muscle</option>
+                <option value="gain-weight">Gain Weight</option>
+                <option value="other">Other: Please Specify</option>
+            </select>
+
+            <input type="text" id="otherInput" placeholder="Please specify your goal" />
+        </div>
+        
         <button onclick="goToPage('page3')">Next</button>
         <button onclick="goToPage('page1')">Back</button>
     </div>
