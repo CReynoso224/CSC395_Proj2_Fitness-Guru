@@ -80,15 +80,13 @@
 <body>
     <div id="page1" class="page active">
         <h1>Fitness Guru&trade; </h1>
-        <p>The app for all your health needs. <br>(We are not liable for any 
-misinformation you may or may not receive while using our services).</p>
+        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
         <button onclick="goToPage('page2')">Get Started!</button>
     </div>
 
     <div id="page2" class="page">
         <h1>Welcome to Page 2</h1>
-        <p>This is the second page where you will continue your fitness 
-journey.</p>
+        <p>This is the second page where you will continue your fitness journey.</p>
 
         <label for="goals">Input Goal: (Choose All that Apply)</label>
     <select id="goals" onchange="toggleOtherInput()">
@@ -99,8 +97,7 @@ journey.</p>
         <option value="other">Other:</option>
     </select>
     
-    <input type="text" id="otherGoal" placeholder="Please specify..." 
-style="display: none; margin-top: 10px;"/>
+    <input type="text" id="otherGoal" placeholder="Please specify..." style="display: none; margin-top: 10px;"/>
 
         <button onclick="goToPage('page3')">Next</button>
         <button onclick="goToPage('page1')">Back</button>
