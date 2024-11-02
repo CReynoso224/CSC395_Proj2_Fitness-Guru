@@ -1,4 +1,3 @@
-// script.js
 function goToPage(pageId) {
     // Hide all pages
     const pages = document.querySelectorAll('.page');
@@ -9,8 +8,10 @@ function goToPage(pageId) {
 }
 
 function toggleOtherInput() {
-    const selectElement = document.getElementById('goals');
-    const otherInput = document.getElementById('otherGoal');
+    const selectElement = document.getElementById('goalSelect');
+    const otherInput = document.getElementById('otherInput');
+    
+    // Show or hide the "Other" input based on selection
     if (selectElement.value === 'other') {
         otherInput.style.display = 'block';
     } else {
