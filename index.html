@@ -25,6 +25,11 @@
         }
         .active {
             display: block;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            text-align: center;
         }
 
         /* Header Styles */
@@ -60,24 +65,29 @@
         /* Specific Page Styles */
         #page1 h1 {
             color: #FF6347; /* Tomato */
+            text-align: center;
         }
 
         #page1 p {
             color: #000;
+            text-align: center;
         }
 
         #page2 h1, #page3 h1 {
-            color: #4CAF50;
+            color: #FF6347;
+
+        }
+        #otherInput {
+            display: none;
+            margin-top: 10px
         }
     </style>
 </head>
 <body>
     <div id="page1" class="page active">
-        <div class="center-wrapper">
-            <h1>Fitness Guru&trade;</h1>
-            <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
-            <button onclick="goToPage('page2')">Get Started!</button>
-        </div>
+        <h1>Fitness Guru&trade;</h1>
+        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
+        <button onclick="goToPage('page2')">Get Started!</button>
     </div>
 
     <div id="page2" class="page">
@@ -89,16 +99,15 @@
         <div class="dropdown-container">
 
             <!-- Dropdown Menu -->
-            <select id="goalSelect" onchange="checkOtherOption()">
+            <select id="goalSelect" onchange="toggleOtherInput()">
                 <option value="lose-weight">Lose Weight</option>
                 <option value="gain-muscle">Gain Muscle</option>
                 <option value="gain-weight">Gain Weight</option>
                 <option value="other">Other: Please Specify</option>
             </select>
 
-            <input type="text" id="otherInput" placeholder="Please specify your goal" />
+            <input type="text" id="otherInput" placeholder="Please specify your goal"/>
         </div>
-        
 
         <button onclick="goToPage('page3')">Next</button>
         <button onclick="goToPage('page1')">Back</button>
@@ -111,5 +120,6 @@
     </div>
 
     <script src="scripts.js"></script>
+
 </body>
 </html>
