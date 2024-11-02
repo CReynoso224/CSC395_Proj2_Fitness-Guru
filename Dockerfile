@@ -22,3 +22,4 @@ ENV FLASK_ENV=development
 
 # Run the application
 CMD ["flask", "run", "--host=0.0.0.0"]
+
