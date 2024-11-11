@@ -18,21 +18,24 @@
     </div>
 
     <div id="page2" class="page">
-        <h1>What are some of your goals here?</h1>
-        <p>Select one of the following options:</p>
+        <h1>Let's gauge you health and wellbeing!</h1>
+        <p>Select one of the following options that best describes you:</p>
 
         <!-- Centering Wrapper for Dropdown and Textbox -->
         <div class="dropdown-container">
             <!-- Dropdown Menu -->
-            <select id="goalSelect" onchange="toggleOtherInput()">
-                <option value="lose-weight">Lose Weight</option>
-                <option value="gain-muscle">Gain Muscle</option>
-                <option value="gain-weight">Gain Weight</option>
+            <select id="goalSelect" onchange="toggleOtherInput(); loadPersonaData()">
+                <option value="">Select a persona that best describes you!</option>
+                <option value="john-shepard">John Shepard</option>
+                <option value="cheryl-mason">Cheryl Mason</option>
+                <option value="alex-rivera">Alex Rivera</option>
                 <option value="other">Other: Please Specify</option>
             </select>
 
             <input type="text" id="otherInput" placeholder="Please specify your goal" />
         </div>
+
+        <div id="personaInfo"></div>
 
         <button onclick="goToPage('page3')">Next</button>
         <button onclick="goToPage('page1')">Back</button>
