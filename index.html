@@ -1,109 +1,15 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask UI</title>
-    <style>
-        /* General Styles */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            background-image: url('./images/conflicts.jpg');
-            background-size: cover;
-            background-position: center;
-            color: #333;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
 
-        /* Container for the page */
-        .page {
-            display: none;
-        }
-        .active {
-            display: block;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100vh;
-            text-align: center;
-        }
-
-        /* Header Styles */
-        h1 {
-            font-size: 2.5em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        /* Paragraph Styles */
-        p {
-            font-size: 1.2em;
-            color: #555;
-        }
-
-        /* Button Styles */
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            font-size: 1.2em;
-            margin: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        /* Specific Page Styles */
-        #page1 h1 {
-            color: #FF6347; /* Tomato */
-            text-align: center;
-        }
-
-        #page1 p {
-            color: #000;
-            text-align: center;
-        }
-
-        #page2 h1, #page3 h1, #page4 h1 {
-            color: #FF6347;
-        }
-
-        #otherInput {
-            display: none;
-            margin-top: 10px
-        }
-
-        /* Bio Page Styles */
-        #bioSection {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #bioSection img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        #bioSection .bio-text {
-            margin-top: 15px;
-            font-size: 1.2em;
-            color: #333;
-        }
-
-    </style>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="static/css/styles.css">
 </head>
+
 <body>
     <div id="page1" class="page active">
         <h1>Fitness Guru&trade;</h1>
@@ -125,7 +31,7 @@
                 <option value="other">Other: Please Specify</option>
             </select>
 
-            <input type="text" id="otherInput" placeholder="Please specify your goal"/>
+            <input type="text" id="otherInput" placeholder="Please specify your goal" />
         </div>
 
         <button onclick="goToPage('page3')">Next</button>
@@ -155,25 +61,8 @@
         <button onclick="goToPage('page1')">Home</button>
     </div>
 
-    <script>
-        function goToPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-
-            // Show the selected page
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        function toggleOtherInput() {
-            const goalSelect = document.getElementById('goalSelect');
-            const otherInput = document.getElementById('otherInput');
-            if (goalSelect.value === 'other') {
-                otherInput.style.display = 'block';
-            } else {
-                otherInput.style.display = 'none';
-            }
-        }
-    </script>
+    <!-- Link to external JS file -->
+    <script src="static/js/scripts.js"></script>
 </body>
+
 </html>
