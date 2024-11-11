@@ -33,4 +33,76 @@
     text-align: center;
 }
 
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: lightblue;
+    background-image: url('./images/conflicts.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
 
+/* Container for the page */
+.page {
+    display: none;
+}
+
+.active {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Paragraph Styles */
+p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Specific Page Styles */
+#page1 h1 {
+    color: #FF6347; /* Tomato */
+    text-align: center;
+}
+
+#page1 p {
+    color: #000;
+    text-align: center;
+}
+
+#page2 h1, #page3 h1, #page4 h1 {
+    color: #FF6347;
+}
+   
