@@ -1,3 +1,37 @@
+// Persona data
+const personas = {
+    "john-shepard": {
+        name: "John Shepard",
+        age: 30,
+        occupation: "Software Developer",
+        lifestyle: "Sedentary due to work, motivated to lose weight and improve health.",
+        goals: "Lose 20 pounds and improve overall fitness.",
+        painPoints: "Struggles to find time for exercise, overwhelmed by diet advice, needs structured guidance.",
+        motivations: "Avoid long-term health risks, stay motivated through tracking, tailored diet suggestions."
+    },
+    "cheryl-mason": {
+    name: "Cheryl Mason",
+    age: 40,
+    occupation: "Project Manager",
+    lifestyle: "Busy with frequent work travel, enjoys strength training but struggles to maintain consistency.",
+    goals: "Reach a new personal best in deadlifting (lift 250 lbs) while maintaining muscle recovery and wellness.",
+    painPoints: "Needs structured strength training plans that adjust to her gym access, struggles with consistent nutrition while traveling, and requires recovery tips to prevent injury.",
+    motivations: "Enjoys fitness as a way to de-stress, values data tracking to measure progress, and wants to maintain long-term physical health.",
+    },
+
+    "alex-rivera": {
+    name: "Alex Rivera",
+    age: 25,
+    occupation: "Marketing Specialist",
+    lifestyle: "Active runner who has completed a few 5Ks, but is now training for a half marathon.",
+    goals: "Improve endurance and increase running distance to complete a half marathon in under 2 hours.",
+    painPoints: "Needs customized running schedules to avoid injury and struggles with balancing nutrition for endurance and performance.",
+    motivations: "Eager to improve running performance, enjoys the challenge of training, and wants personalized progress tracking to stay motivated.",
+    },
+    // You can add more personas here
+};
+
+
 function goToPage(pageId) {
     // Hide all pages
     const pages = document.querySelectorAll('.page');
@@ -20,35 +54,37 @@ function toggleOtherInput() {
     }
 }
 
-// Function to create checkboxes for experience levels
-function createExperienceCheckboxes() {
-    const levels = ['Novice', 'Beginner', 'Intermediate', 'Proficient', 'Advanced'];
-    const container = document.getElementById('checkbox-container');
+// Function to load persona data when a persona is selected from the dropdown
+function loadPersonaData() {
+    const selectElement = document.getElementById('goalSelect');
+    const selectedPersona = selectElement.value;
+    
+    if (personas[selectedPersona]) {
+        const persona = personas[selectedPersona];
+        document.getElementById('otherInput').style.display = 'none'; // Hide "Other" input if a persona is selected
+        displayPersonaInfo(persona); // Display persona info
+    } else {
+        document.getElementById('otherInput').style.display = 'block'; // Show "Other" input if no persona or "Other" is selected
+        clearPersonaInfo(); // Clear previously displayed persona info
+    }
+}
 
-    levels.forEach(level => {
-        // Create a new div for each checkbox
-        const div = document.createElement('div');
-        div.classList.add('checkbox-item');
+// Function to display selected persona's information
+function displayPersonaInfo(persona) {
+    document.getElementById('personaInfo').innerHTML = `
+        <p><strong>Name:</strong> ${persona.name}</p>
+        <p><strong>Age:</strong> ${persona.age}</p>
+        <p><strong>Occupation:</strong> ${persona.occupation}</p>
+        <p><strong>Lifestyle:</strong> ${persona.lifestyle}</p>
+        <p><strong>Goals:</strong> ${persona.goals}</p>
+        <p><strong>Pain Points:</strong> ${persona.painPoints}</p>
+        <p><strong>Motivations:</strong> ${persona.motivations}</p>
+    `;
+}
 
-        // Create the checkbox input
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = level;
-        checkbox.name = 'experience-level';
-        checkbox.value = level;
-
-        // Create the label for the checkbox
-        const label = document.createElement('label');
-        label.setAttribute('for', level);
-        label.innerText = level;
-
-        // Append checkbox and label to the div
-        div.appendChild(checkbox);
-        div.appendChild(label);
-
-        // Append the div to the container
-        container.appendChild(div);
-    });
+// Function to clear persona info if no persona or "Other" is selected
+function clearPersonaInfo() {
+    document.getElementById('personaInfo').innerHTML = '';
 }
 
 // Initialize the page elements when the page loads
