@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -73,14 +73,34 @@
             text-align: center;
         }
 
-        #page2 h1, #page3 h1 {
+        #page2 h1, #page3 h1, #page4 h1 {
             color: #FF6347;
-
         }
+
         #otherInput {
             display: none;
             margin-top: 10px
         }
+
+        /* Bio Page Styles */
+        #bioSection {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #bioSection img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        #bioSection .bio-text {
+            margin-top: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
     </style>
 </head>
 <body>
@@ -91,13 +111,11 @@
     </div>
 
     <div id="page2" class="page">
-
         <h1>What are some of your goals here?</h1>
         <p>Select one of the following options:</p>
 
         <!-- Centering Wrapper for Dropdown and Textbox -->
         <div class="dropdown-container">
-
             <!-- Dropdown Menu -->
             <select id="goalSelect" onchange="toggleOtherInput()">
                 <option value="lose-weight">Lose Weight</option>
@@ -117,9 +135,44 @@
         <h1>Page 3</h1>
         <p>This is the third and final page. Keep going strong!</p>
         <button onclick="goToPage('page2')">Back</button>
+        <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
 
-    <script src="scripts.js"></script>
+    <!-- New Bio Page -->
+    <div id="page4" class="page">
+        <h1>My Bio</h1>
+        <div id="bioSection">
+            <img src="https://www.example.com/sample-profile-pic.jpg" alt="Profile Picture">
+            <div class="bio-text">
+                <p><strong>Name:</strong> John Doe</p>
+                <p><strong>Age:</strong> 30</p>
+                <p><strong>Interests:</strong> Fitness, Health, Wellness</p>
+                <p><strong>About Me:</strong> Passionate about maintaining a healthy lifestyle and helping others achieve their fitness goals.</p>
+            </div>
+        </div>
+        <button onclick="goToPage('page3')">Back</button>
+        <button onclick="goToPage('page1')">Home</button>
+    </div>
 
+    <script>
+        function goToPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function toggleOtherInput() {
+            const goalSelect = document.getElementById('goalSelect');
+            const otherInput = document.getElementById('otherInput');
+            if (goalSelect.value === 'other') {
+                otherInput.style.display = 'block';
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
