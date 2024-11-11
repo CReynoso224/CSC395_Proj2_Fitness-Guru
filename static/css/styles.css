@@ -1,1 +1,36 @@
-#css here
+@charset "UTF-8";
+
+/* Centering the dropdown and "Other" input box */
+.dropdown-container {
+    display: flex;
+    flex-direction: column;  /* Stack dropdown and input vertically */
+    align-items: center;     /* Center horizontally */
+    justify-content: center; /* Ensure vertical centering */
+    margin-top: 10px;
+    width: 100%;             /* Take up full width */
+    max-width: 400px;        /* Restrict the container width */
+    margin: 0 auto;          /* Horizontally center the container */
+}
+
+#goalSelect {
+    width: 100%;             /* Ensure dropdown takes full width */
+    max-width: 300px;        /* Limit the width of the dropdown */
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;     /* Space between dropdown and input */
+}
+
+#otherInput {
+    display: none;           /* Initially hidden */
+    margin-top: 10px;
+    width: 100%;             /* Make input take full width of container */
+    max-width: 300px;        /* Match the dropdown's max-width */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+
