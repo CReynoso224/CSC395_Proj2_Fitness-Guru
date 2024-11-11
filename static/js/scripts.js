@@ -2,7 +2,7 @@ function goToPage(pageId) {
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('active'));
-    
+
     // Show the selected page
     document.getElementById(pageId).classList.add('active');
 }
@@ -10,7 +10,7 @@ function goToPage(pageId) {
 function toggleOtherInput() {
     const selectElement = document.getElementById('goalSelect');
     const otherInput = document.getElementById('otherInput');
-    
+
     // Show the input only if "Other" is selected
     if (selectElement.value === 'other') {
         otherInput.style.display = 'block';
@@ -19,6 +19,7 @@ function toggleOtherInput() {
         otherInput.value = ''; // Clear input if "Other" is not selected
     }
 }
+
 // Function to create checkboxes for experience levels
 function createExperienceCheckboxes() {
     const levels = ['Novice', 'Beginner', 'Intermediate', 'Proficient', 'Advanced'];
@@ -51,7 +52,7 @@ function createExperienceCheckboxes() {
 }
 
 // Initialize the page elements when the page loads
-window.onload = function() {
+window.onload = function () {
     createExperienceCheckboxes();  // Create experience level checkboxes
 
     // Optionally, set up the toggle behavior for the 'Other' input box if necessary
