@@ -10,24 +10,26 @@ const personas = {
         motivations: "Avoid long-term health risks, stay motivated through tracking, tailored diet suggestions."
     },
     "cheryl-mason": {
-    name: "Cheryl Mason",
-    age: 40,
-    occupation: "Project Manager",
-    lifestyle: "Busy with frequent work travel, enjoys strength training but struggles to maintain consistency.",
-    goals: "Reach a new personal best in deadlifting (lift 250 lbs) while maintaining muscle recovery and wellness.",
-    painPoints: "Needs structured strength training plans that adjust to her gym access, struggles with consistent nutrition while traveling, and requires recovery tips to prevent injury.",
-    motivations: "Enjoys fitness as a way to de-stress, values data tracking to measure progress, and wants to maintain long-term physical health.",
+        name: "Cheryl Mason",
+        age: 40,
+        occupation: "Project Manager",
+        lifestyle: "Busy with frequent work travel, enjoys strength training but struggles to maintain consistency.",
+        goals: "Reach a new personal best in deadlifting (lift 250 lbs) while maintaining muscle recovery and wellness.",
+        painPoints: "Needs structured strength training plans that adjust to her gym access, struggles with consistent nutrition while traveling, and requires recovery tips to prevent injury.",
+        motivations: "Enjoys fitness as a way to de-stress, values data tracking to measure progress, and wants to maintain long-term physical health.",
     },
 
     "alex-rivera": {
-    name: "Alex Rivera",
-    age: 25,
-    occupation: "Marketing Specialist",
-    lifestyle: "Active runner who has completed a few 5Ks, but is now training for a half marathon.",
-    goals: "Improve endurance and increase running distance to complete a half marathon in under 2 hours.",
-    painPoints: "Needs customized running schedules to avoid injury and struggles with balancing nutrition for endurance and performance.",
-    motivations: "Eager to improve running performance, enjoys the challenge of training, and wants personalized progress tracking to stay motivated.",
+        name: "Alex Rivera",
+        age: 25,
+        occupation: "Marketing Specialist",
+        lifestyle: "Active runner who has completed a few 5Ks, but is now training for a half marathon.",
+        goals: "Improve endurance and increase running distance to complete a half marathon in under 2 hours.",
+        painPoints: "Needs customized running schedules to avoid injury and struggles with balancing nutrition for endurance and performance.",
+        motivations: "Eager to improve running performance, enjoys the challenge of training, and wants personalized progress tracking to stay motivated.",
     },
+
+    
     // You can add more personas here
 };
 
