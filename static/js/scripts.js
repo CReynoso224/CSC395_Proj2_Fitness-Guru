@@ -98,3 +98,36 @@ window.onload = function () {
     // Add event listener for when the user changes the goal selection
     goalSelect.addEventListener('change', toggleOtherInput);
 };
+
+// Function to send a message to the chatbot API and display the response
+async function sendMessage() {
+    // Get the user's input from the input field
+    const userInput = document.getElementById("user-input").value;
+
+    // Display the user's message in the chat
+    document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+
+    // Call the server's '/generate_plan' route with the user's message
+    const response = await fetch('/generate_plan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        // Send the user's input as JSON
+        body: JSON.stringify({ message: userInput })
+    });
+
+    // Get the server's response and parse it
+    const result = await response.json();
+
+    // Check if a response was received and display it
+    if (result.plan) {
+        document.getElementById("chat-messages").innerHTML += `<p><strong>Fitness Guru:</strong> ${result.plan}</p>`;
+    } else {
+        // Display an error message if something went wrong
+        document.getElementById("chat-messages").innerHTML += `<p><strong>Error:</strong> ${result.error}</p>`;
+    }
+
+    // Clear the input field after the message is sent
+    document.getElementById("user-input").value = "";
+}
