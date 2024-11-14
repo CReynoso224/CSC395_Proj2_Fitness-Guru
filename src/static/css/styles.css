@@ -71,7 +71,7 @@ h1 {
 /* Paragraph Styles */
 p {
     font-size: 1.2em;
-    color: #555;
+    color: black;
 }
 
 /* Button Styles */
@@ -98,7 +98,7 @@ button:hover {
 }
 
 #page1 p {
-    color: #000;
+    color: white;
     text-align: center;
 }
 
@@ -155,4 +155,5 @@ button:hover {
 #chat-container button:hover {
     background-color: #45a049;
 }
+
    
