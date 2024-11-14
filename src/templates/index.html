@@ -7,7 +7,7 @@
     <title>Flask UI</title>
 
     <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="./CSC395_Proj2_Fitness-Guru/src/static/css/styles.css">
 </head>
 
 <body>
@@ -44,6 +44,15 @@
     <div id="page3" class="page">
         <h1>Page 3</h1>
         <p>This is the third and final page. Keep going strong!</p>
+    
+        <!-- Chatbot Interface -->
+        <div id="chat-container">
+            <h2>Chat with Fitness Guru</h2>
+            <div id="chat-messages"></div>
+            <input type="text" id="user-input" placeholder="Ask me anything about fitness or meal plans!" />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    
         <button onclick="goToPage('page2')">Back</button>
         <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
@@ -65,7 +74,7 @@
     </div>
 
     <!-- Link to external JS file -->
-    <script src="static/js/scripts.js"></script>
+    <script src="./CSC395_Proj2_Fitness-Guru/src/static/js/scripts.js"></script>
 </body>
 
 </html>
