@@ -19,13 +19,12 @@
 
     <div id="page2" class="page">
         <h1>Let's gauge your health and wellbeing!</h1>
-        <p>Select one of the following options that best describes you:</p>
+        <p>Select a persona that best describes you!:</p>
 
         <!-- Centering Wrapper for Dropdown and Textbox -->
         <div class="dropdown-container">
             <!-- Dropdown Menu -->
             <select id="goalSelect" onchange="toggleOtherInput(); loadPersonaData()">
-                <option value="">Select a persona that best describes you!</option>
                 <option value="john-shepard">John Shepard</option>
                 <option value="cheryl-mason">Cheryl Mason</option>
                 <option value="alex-rivera">Alex Rivera</option>
@@ -43,7 +42,15 @@
 
     <div id="page3" class="page">
         <h1>Page 3</h1>
-        <p>This is the third and final page. Keep going strong!</p>
+        <p>Plan your progress, and ask our chatbot any questions you may have!</p>
+
+        <div id="chat-container">
+            <h2>Chat with Fitness Guru</h2>
+            <div id="chat-messages"></div>
+            <input types="text" id="user-input" placeholder="Ask me anything about fitness or meal plans!"/>
+            <button onclick="sendMessages()">Send</button>
+        </div>
+    
         <button onclick="goToPage('page2')">Back</button>
         <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
@@ -66,6 +73,7 @@
 
     <!-- Link to external JS file -->
     <script src="static/js/scripts.js"></script>
+    
 </body>
 
 </html>
