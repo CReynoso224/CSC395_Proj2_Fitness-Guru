@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+/* Centering the dropdown and "Other" input box */
+.dropdown-container {
+    display: flex;
+    flex-direction: column;  /* Stack dropdown and input vertically */
+    align-items: center;     /* Center horizontally */
+    justify-content: center; /* Ensure vertical centering */
+    margin-top: 10px;
+    width: 100%;             /* Take up full width */
+    max-width: 400px;        /* Restrict the container width */
+    margin: 0 auto;          /* Horizontally center the container */
+}
+
+#goalSelect {
+    width: 100%;             /* Ensure dropdown takes full width */
+    max-width: 300px;        /* Limit the width of the dropdown */
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;     /* Space between dropdown and input */
+}
+
+#otherInput {
+    display: none;           /* Initially hidden */
+    margin-top: 10px;
+    width: 100%;             /* Make input take full width of container */
+    max-width: 300px;        /* Match the dropdown's max-width */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: lightblue;
+    background-image: url('./images/conflicts.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Container for the page */
+.page {
+    display: none;
+}
+
+.active {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Paragraph Styles */
+p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Specific Page Styles */
+#page1 h1 {
+    color: #FF6347; /* Tomato */
+    text-align: center;
+}
+
+#page1 p {
+    color: #000;
+    text-align: center;
+}
+
+#page2 h1, #page3 h1, #page4 h1 {
+    color: #FF6347;
+}
+
+/* Chatbot Container Styling */
+#chat-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* Chat Messages Styling */
+#chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#chat-messages p {
+    margin: 5px 0;
+}
+
+/* User Input Styling */
+#user-input {
+    width: 80%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+/* Chatbot Button Styling */
+#chat-container button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#chat-container button:hover {
+    background-color: #45a049;
+}
+   

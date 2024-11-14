@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .  # Build from the current directory
+      dockerfile: Dockerfile
+    container_name: flask_app
+    ports:
+      - "5000:5000"  # Map container port 5000 to host port 5000
+    environment:
+      CHATGPT_API_KEY: "${CHATGPT_API_KEY}"  # Inject API key from environment
+      FLASK_ENV: development
+    volumes:
+      - .:/app  # Mount the current directory for live code updates
+    depends_on:
+      - db  # Ensure db starts before the web service
+
+  db:
+    image: postgres:13  # Specify PostgreSQL version
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
