@@ -170,14 +170,6 @@ button:hover {
     text-align: left;
 }
 
-/* Calendar Section Styling */
-#calendar {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-}
 
 /* Animation */
 @keyframes fadeIn {
@@ -189,5 +181,33 @@ button:hover {
     }
 }
 
+#calendar {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 90%; /* Adjust as needed to prevent compression */
+    min-height: 600px; /* Set a reasonable minimum height */
+    width: 100%; /* Allow the calendar to take up the full width */
+    margin: 20px auto; /* Center the calendar */
+}
 
+/* Ensure #page5 has enough space */
+#page5 {
+    width: 100%; /* Ensure the page uses full available space */
+    display: block;
+    padding: 20px; /* Add some padding for spacing */
+    text-align: center;
+}
+
+#page5 h1, #page5 p {
+    margin: 0 auto; /* Center the elements */
+}
+
+/* Prevent the body flex layout from impacting child elements */
+body {
+    display: block; /* Change to block to avoid potential layout issues */
+    overflow-y: auto; /* Allow scrolling if needed */
+}
    
