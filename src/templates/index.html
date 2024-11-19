@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask UI</title>
+    <title>Fitness Guru™</title>
 
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="../static/css/styles.css">
@@ -12,8 +12,8 @@
 
 <body>
     <div id="page1" class="page active">
-        <h1>Fitness Guru&trade;</h1>
-        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
+        <h1>Fitness Guru™</h1>
+        <p>The app for all your health needs.<br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
         <button onclick="goToPage('page2')">Get Started!</button>
     </div>
 
@@ -36,7 +36,7 @@
         </div>
 
         <div id="personaInfo"></div>
-        
+
         <button class="red-button" onclick="goToPage('page1')">Back</button>
         <button class="button" onclick="goToPage('page3')">Next</button>
 
@@ -45,7 +45,7 @@
     <div id="page3" class="page">
         <h1>Page 3</h1>
         <p>This is the third and final page. Keep going strong!</p>
-    
+
         <!-- Chatbot Interface -->
         <div id="chat-container">
             <h2>Chat with Fitness Guru</h2>
@@ -53,7 +53,7 @@
             <input type="text" id="user-input" placeholder="Ask me anything about fitness or meal plans!" />
             <button onclick="sendMessage()">Send</button>
         </div>
-    
+
         <button class="red-button" onclick="goToPage('page2')">Back</button>
         <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
@@ -90,3 +90,4 @@
 </body>
 
 </html>
+
