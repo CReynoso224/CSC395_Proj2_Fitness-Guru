@@ -3,146 +3,134 @@
 /* Centering the dropdown and "Other" input box */
 .dropdown-container {
     display: flex;
-    flex-direction: column;  /* Stack dropdown and input vertically */
-    align-items: center;     /* Center horizontally */
-    justify-content: center; /* Ensure vertical centering */
-    margin-top: 10px;
-    width: 100%;             /* Take up full width */
-    max-width: 400px;        /* Restrict the container width */
-    margin: 0 auto;          /* Horizontally center the container */
-}
-
-#goalSelect {
-    width: 100%;             /* Ensure dropdown takes full width */
-    max-width: 300px;        /* Limit the width of the dropdown */
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;     /* Space between dropdown and input */
-}
-
-#otherInput {
-    display: none;           /* Initially hidden */
-    margin-top: 10px;
-    width: 100%;             /* Make input take full width of container */
-    max-width: 300px;        /* Match the dropdown's max-width */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    animation: fadeIn 1s ease;
 }
 
 /* General Styles */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: lightblue;
-    background-image: url('./images/conflicts.jpg');
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(45deg, #48C6EF, #6F86D6); /* Gradient background */
     background-size: cover;
-    background-position: center;
     color: #333;
+    display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    overflow: hidden;
 }
 
-/* Container for the page */
+/* Page Container */
 .page {
     display: none;
+    animation: fadeIn 1.5s ease;
 }
 
 .active {
     display: block;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
     text-align: center;
+    padding: 40px;
+    width: 100%;
 }
 
 /* Header Styles */
 h1 {
-    font-size: 2.5em;
-    color: #333;
+    font-size: 2.8em;
+    color: white;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
     margin-bottom: 10px;
+    transition: transform 0.5s ease;
+}
+
+h1:hover {
+    transform: scale(1.05); /* Hover effect */
 }
 
 /* Paragraph Styles */
 p {
     font-size: 1.2em;
-    color: black;
+    color: white;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 /* Button Styles */
 button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
+    padding: 12px 24px;
+    background-color: #FF6347; /* Tomato */
     border: none;
     color: white;
     font-size: 1.2em;
     margin: 10px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.red-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.red-button:hover {
-    background-color: darkred;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-    background-color: #98FF98;
+    background-color: #ff4500; /* Darker red */
+    transform: scale(1.05); /* Button hover effect */
 }
 
-/* Specific Page Styles */
-#page1 h1 {
-    color: #FFFDD0; /* Tomato */
-    text-align: center;
+.red-button {
+    background-color: #e74c3c;
 }
 
-#page1 p {
-    color: white;
-    text-align: center;
+.red-button:hover {
+    background-color: #c0392b;
 }
 
-#page2 h1, #page3 h1, #page4 h1 {
-    color: #FF6347;
+/* Dropdown and Input Box Styling */
+#goalSelect, #otherInput {
+    width: 80%;
+    max-width: 300px;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#goalSelect:focus, #otherInput:focus {
+    background-color: #FFD700; /* Focused input field */
 }
 
 /* Chatbot Container Styling */
 #chat-container {
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 30px;
+    padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     max-width: 600px;
     margin: 0 auto;
     text-align: left;
+    transition: transform 0.3s ease;
 }
 
-/* Chat Messages Styling */
+#chat-container:hover {
+    transform: scale(1.03);
+}
+
 #chat-messages {
     max-height: 300px;
     overflow-y: auto;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     padding: 10px;
     background: #fff;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid #ddd;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 #chat-messages p {
@@ -151,25 +139,55 @@ button:hover {
 
 /* User Input Styling */
 #user-input {
-    width: 80%;
-    padding: 8px;
+    width: 75%;
+    padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
     margin-right: 5px;
 }
 
-/* Chatbot Button Styling */
-#chat-container button {
-    padding: 8px 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+#user-input:focus {
+    border-color: #FF6347; /* Red focus border */
 }
 
-#chat-container button:hover {
-    background-color: #45a049;
+/* Bio Section Styling */
+#bioSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
+
+#bioSection img {
+    border-radius: 50%;
+    max-width: 150px;
+    margin-right: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bio-text {
+    color: #444;
+    text-align: left;
+}
+
+/* Calendar Section Styling */
+#calendar {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 
    
