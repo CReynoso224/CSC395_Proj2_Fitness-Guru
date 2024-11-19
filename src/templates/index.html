@@ -4,16 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Guru™</title>
+    <title>Flask UI</title>
 
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="../static/css/styles.css">
+    
+    <!-- FullCalendar CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css">
+
+    
 </head>
 
 <body>
     <div id="page1" class="page active">
-        <h1>Fitness Guru™</h1>
-        <p>The app for all your health needs.<br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
+        <h1>Fitness Guru&trade;</h1>
+        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
         <button onclick="goToPage('page2')">Get Started!</button>
     </div>
 
@@ -21,9 +26,7 @@
         <h1>Let's gauge your health and wellbeing!</h1>
         <p>Select one of the following options that best describes you:</p>
 
-        <!-- Centering Wrapper for Dropdown and Textbox -->
         <div class="dropdown-container">
-            <!-- Dropdown Menu -->
             <select id="goalSelect" onchange="toggleOtherInput(); loadPersonaData()">
                 <option value="">Select a persona that best describes you!</option>
                 <option value="john-shepard">John Shepard</option>
@@ -31,38 +34,34 @@
                 <option value="alex-rivera">Alex Rivera</option>
                 <option value="other">Other: Please Specify</option>
             </select>
-
             <input type="text" id="otherInput" placeholder="Please specify your goal" />
         </div>
 
         <div id="personaInfo"></div>
-
+        
         <button class="red-button" onclick="goToPage('page1')">Back</button>
         <button class="button" onclick="goToPage('page3')">Next</button>
-
     </div>
 
     <div id="page3" class="page">
         <h1>Page 3</h1>
         <p>This is the third and final page. Keep going strong!</p>
-
-        <!-- Chatbot Interface -->
+    
         <div id="chat-container">
             <h2>Chat with Fitness Guru</h2>
             <div id="chat-messages"></div>
             <input type="text" id="user-input" placeholder="Ask me anything about fitness or meal plans!" />
             <button onclick="sendMessage()">Send</button>
         </div>
-
+    
         <button class="red-button" onclick="goToPage('page2')">Back</button>
         <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
 
-    <!-- New Bio Page -->
     <div id="page4" class="page">
         <h1>My Bio</h1>
         <div id="bioSection">
-            <img src="https://www.example.com/sample-profile-pic.jpg" alt="Profile Picture">
+            <img src="../static/images/DefualtPFP.png" alt="Profile Picture">
             <div class="bio-text">
                 <p><strong>Name:</strong> John Doe</p>
                 <p><strong>Age:</strong> 30</p>
@@ -76,7 +75,6 @@
         <button onclick="goToPage('page5')">Calendar</button>
     </div>
 
-    <!-- Calendar Page-->
     <div id="page5" class="page">
         <h1>Fitness Calendar</h1>
         <p>Plan your fitness journey and track your events!</p>
@@ -85,9 +83,44 @@
         <button onclick="goToPage('page1')">Home</button>
     </div>
 
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    
     <!-- Link to external JS file -->
     <script src="../static/js/scripts.js"></script>
+
+    <!-- Inline JavaScript for Calendar Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Render calendar when navigating to page5
+            const calendarEl = document.getElementById('calendar');
+            if (calendarEl) {
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth'
+                });
+                calendar.render();
+            }
+        });
+
+        // Page navigation logic
+        function goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+
+            // Reinitialize the calendar when page5 is active
+            if (pageId === 'page5') {
+                const calendarEl = document.getElementById('calendar');
+                if (calendarEl && !calendarEl.innerHTML) { // Avoid re-rendering
+                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth'
+                    });
+                    calendar.render();
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
-
