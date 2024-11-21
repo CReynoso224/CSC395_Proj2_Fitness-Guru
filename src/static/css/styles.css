@@ -211,3 +211,10 @@ body {
     overflow-y: auto; /* Allow scrolling if needed */
 }
    
+#page5:not(.active) #calendar {
+    display: none;
+}
+
+.page:not(.active) {
+    display: none !important; /* Ensure it overrides any other conflicting styles */
+}

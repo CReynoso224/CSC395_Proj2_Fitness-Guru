@@ -63,16 +63,19 @@
         </div>
         <button class="red-button" onclick="goToPage('page3')">Back</button>
         <button onclick="goToPage('page1')">Home</button>
+        <button class="red-button" onclick="sendPersonInfo()">Generate Plan</button>
         <button onclick="goToPage('page5')">Calendar</button>
     </div>
 
-    <div id="page5" class="page">
+<div id="page5" class="page">
+    <div class="content">
         <h1>Fitness Calendar</h1>
         <p>Plan your fitness journey and track your events!</p>
         <div id="calendar"></div>
-        <button onclick="goToPage('page4')">Back</button>
-        <button onclick="goToPage('page1')">Home</button>
     </div>
+    <button onclick="goToPage('page4')">Back</button>
+    <button onclick="goToPage('page1')">Home</button>
+</div>
 
     <script src="../static/js/scripts.js"></script>
     <script>
@@ -100,7 +103,26 @@
                 });
                 calendar.render();
             }
+            
+            function goToPage(pageId) {
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+
+                    // Trigger FullCalendar update when showing #page5
+                    if (pageId === 'page5' && calendar) {
+                        calendar.updateSize();
+                    }
+                }
+            }
+
+            window.goToPage = goToPage;
         });
+        
     </script>
 </body>
 </html>

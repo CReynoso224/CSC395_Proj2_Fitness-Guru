@@ -33,16 +33,48 @@ const personas = {
     // You can add more personas here
 };
 
+// hard coded test to make sure stuff is getting sent over
+function sendPersonInfo() {
+    const personInfo = {
+            name: "John Shepard",
+            age: 30,
+            occupation: "Software Developer",
+            lifestyle: "Sedentary due to work, motivated to lose weight and improve health.",
+            goals: "Lose 20 pounds and improve overall fitness.",
+            painPoints: "Struggles to find time for exercise, overwhelmed by diet advice, needs structured guidance.",
+            motivations: "Avoid long-term health risks, stay motivated through tracking, tailored diet suggestions."
+    };
+
+    fetch('http://localhost:5000/generate_plan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(personInfo)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Response from server:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
 
 function goToPage(pageId) {
     // Hide all pages
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(page => page.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
 
-    // Show the selected page
-    document.getElementById(pageId).classList.add('active');
+    // Show the target page
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
 }
-
 function toggleOtherInput() {
     const selectElement = document.getElementById('goalSelect');
     const otherInput = document.getElementById('otherInput');
