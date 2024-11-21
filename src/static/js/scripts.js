@@ -165,3 +165,38 @@ async function sendMessage() {
     // Clear the input field after the message is sent
     document.getElementById("user-input").value = "";
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const inputBox = document.getElementById('otherInput');
+    const saveButton = document.getElementById('saveButton');
+    const statusMessage = document.getElementById('statusMessage');
+    const goalDisplay = document.getElementById('userGoalDisplay'); // Updated goal display element
+
+    // Check if there's an existing goal in localStorage
+    const savedGoal = localStorage.getItem('userGoal');
+    if (savedGoal) {
+        const goalObject = JSON.parse(savedGoal);  // Parse the stored JSON string
+        goalDisplay.textContent = goalObject.goal;  // Display the saved goal
+    }
+
+    saveButton.addEventListener('click', () => {
+        const inputValue = inputBox.value.trim(); // Remove extra whitespace
+
+        if (!inputValue) {
+            statusMessage.textContent = "Please enter a goal before saving.";
+            return;
+        }
+
+        const inputJson = { goal: inputValue }; // Create JSON object
+
+        try {
+            localStorage.setItem('userGoal', JSON.stringify(inputJson)); // Store in localStorage
+            statusMessage.textContent = "Goal saved to localStorage!";
+            goalDisplay.textContent = inputJson.goal;  // Update the goal display
+        } catch (error) {
+            console.error("Failed to save to localStorage:", error);
+            statusMessage.textContent = "An error occurred while saving your goal.";
+        }
+    });
+});
+

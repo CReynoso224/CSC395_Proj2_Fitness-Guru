@@ -31,6 +31,12 @@
                 <option value="other">Other: Please Specify</option>
             </select>
             <input type="text" id="otherInput" placeholder="Please specify your goal" />
+    <!-- Button to save input -->
+    <button id="saveButton">Save Goal</button>
+    
+    <!-- Display feedback -->
+    <p id="statusMessage"></p>
+    
         </div>
         <div id="personaInfo"></div>
         <button class="red-button" onclick="goToPage('page1')">Back</button>
@@ -59,6 +65,7 @@
                 <p><strong>Age:</strong> 30</p>
                 <p><strong>Interests:</strong> Fitness, Health, Wellness</p>
                 <p><strong>About Me:</strong> Passionate about maintaining a healthy lifestyle and helping others achieve their fitness goals.</p>
+                <p><strong>Goal:</strong> <span id="userGoalDisplay">Lose 10 pounds</span></p>
             </div>
         </div>
         <button class="red-button" onclick="goToPage('page3')">Back</button>
