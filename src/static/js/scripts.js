@@ -166,6 +166,91 @@ async function sendMessage() {
     document.getElementById("user-input").value = "";
 }
 
+// Reset goal on page load
+window.onload = function () {
+    // Clear the goal from localStorage when the page loads
+    localStorage.removeItem('userGoal');
+    
+    // Optionally, reset the displayed goal text to the default (if needed)
+    document.getElementById("userGoalDisplay").textContent = "Lose 10 pounds"; 
+};
+
+// Wait for the DOM to be fully loaded before executing the following
+document.addEventListener('DOMContentLoaded', () => {
+    const inputBox = document.getElementById('otherInput');
+    const saveButton = document.getElementById('saveButton');
+    const statusMessage = document.getElementById('statusMessage');
+    const goalDisplay = document.getElementById('userGoalDisplay'); // Updated goal display element
+
+    // Check if there's an existing goal in localStorage
+    const savedGoal = localStorage.getItem('userGoal');
+    if (savedGoal) {
+        const goalObject = JSON.parse(savedGoal);  // Parse the stored JSON string
+        goalDisplay.textContent = goalObject.goal;  // Display the saved goal
+    }
+
+    saveButton.addEventListener('click', () => {
+        const inputValue = inputBox.value.trim(); // Remove extra whitespace
+
+        if (!inputValue) {
+            statusMessage.textContent = "Please enter a goal before saving.";
+            return;
+        }
+
+        const inputJson = { goal: inputValue }; // Create JSON object
+
+        try {
+            localStorage.setItem('userGoal', JSON.stringify(inputJson)); // Store in localStorage
+            statusMessage.textContent = "Goal saved to localStorage!";
+            goalDisplay.textContent = inputJson.goal;  // Update the goal display
+        } catch (error) {
+            console.error("Failed to save to localStorage:", error);
+            statusMessage.textContent = "An error occurred while saving your goal.";
+        }
+    });
+});
+
+// Reset page sections and goal on page load
+window.onload = function () {
+    // Clear the goal from localStorage when the page loads
+    localStorage.removeItem('userGoal');
+    
+    // Optionally, reset the displayed goal text to the default (if needed)
+    document.getElementById("userGoalDisplay").textContent = "Lose 10 pounds"; 
+
+    // Reset page sections to default state
+    const pageIds = ["page1", "page2", "page3", "page4"]; // Add any other page IDs here if necessary
+    pageIds.forEach(pageId => {
+        const page = document.getElementById(pageId);
+        if (page) {
+            resetPageContent(page); // Reset content for each page
+        }
+    });
+};
+
+// Function to reset content of a page section
+function resetPageContent(page) {
+    // Reset the content within each page to its default state
+    const inputs = page.querySelectorAll('input[type="text"], input[type="number"], textarea');
+    inputs.forEach(input => {
+        input.value = ''; // Clear text and number inputs
+    });
+
+    const selects = page.querySelectorAll('select');
+    selects.forEach(select => {
+        select.selectedIndex = 0; // Reset select elements to their default value
+    });
+
+    // Reset any other custom elements that need to go back to the default state
+    const goalDisplay = page.querySelector("#userGoalDisplay");
+    if (goalDisplay) {
+        goalDisplay.textContent = "Lose 10 pounds"; // Reset the goal display
+    }
+
+    // Add additional reset logic here for other dynamic content on the page (like checkboxes, radio buttons, etc.)
+}
+
+// Wait for the DOM to be fully loaded before executing the following
 document.addEventListener('DOMContentLoaded', () => {
     const inputBox = document.getElementById('otherInput');
     const saveButton = document.getElementById('saveButton');

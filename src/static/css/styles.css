@@ -218,3 +218,4 @@ body {
 .page:not(.active) {
     display: none !important; /* Ensure it overrides any other conflicting styles */
 }
+
