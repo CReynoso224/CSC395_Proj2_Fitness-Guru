@@ -13,7 +13,7 @@ CORS(app)
 
 limiter = Limiter(get_remote_address, app=app)
 
-# Hardcoded API key for testing
+# Hardcoded API key for testin
 CHATGPT_API_KEY = "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"
 
 client = OpenAI(
