@@ -133,38 +133,57 @@ window.onload = function () {
     goalSelect.addEventListener('change', toggleOtherInput);
 };
 
-// Function to send a message to the chatbot API and display the response
+// Function to send a message
 async function sendMessage() {
-    // Get the user's input from the input field
     const userInput = document.getElementById("user-input").value;
+    const chatMessages = document.getElementById("chat-messages");
 
-    // Display the user's message in the chat
-    document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+    if (!userInput.trim()) return; // Avoid empty messages
 
-    // Call the server's '/generate_plan' route with the user's message
-    const response = await fetch('/generate_plan', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        // Send the user's input as JSON
-        body: JSON.stringify({ message: userInput })
-    });
+    // Display the user's message
+    const userMessageDiv = document.createElement("div");
+    userMessageDiv.className = "user-message";
+    userMessageDiv.textContent = `You: ${userInput}`;
+    chatMessages.appendChild(userMessageDiv);
 
-    // Get the server's response and parse it
-    const result = await response.json();
+    // Clear input
+    document.getElementById("user-input").value = "";
 
-    // Check if a response was received and display it
-    if (result.plan) {
-        document.getElementById("chat-messages").innerHTML += `<p><strong>Fitness Guru:</strong> ${result.plan}</p>`;
-    } else {
-        // Display an error message if something went wrong
-        document.getElementById("chat-messages").innerHTML += `<p><strong>Error:</strong> ${result.error}</p>`;
+    // Send message to the server
+    try {
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: userInput }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            // Display ChatGPT's response
+            const botMessageDiv = document.createElement("div");
+            botMessageDiv.className = "bot-message";
+            botMessageDiv.textContent = `Fitness Guru: ${data.reply}`;
+            chatMessages.appendChild(botMessageDiv);
+        } else {
+            throw new Error("Failed to get a response from the server");
+        }
+    } catch (error) {
+        console.error(error);
+
+        // Display an error message
+        const errorMessageDiv = document.createElement("div");
+        errorMessageDiv.className = "error-message";
+        errorMessageDiv.textContent = "Oops! Something went wrong. Please try again.";
+        chatMessages.appendChild(errorMessageDiv);
     }
 
-    // Clear the input field after the message is sent
-    document.getElementById("user-input").value = "";
+    // Scroll to the bottom of the chat container
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
 
 // Reset goal on page load
 window.onload = function () {
@@ -284,4 +303,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
