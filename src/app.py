@@ -16,6 +16,18 @@ limiter = Limiter(get_remote_address, app=app)
 # Hardcoded API key for testin
 CHATGPT_API_KEY = "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"
 
+
+
+
+
+stored_biometric_data = {
+    "age": 30,
+    "weight": 75,
+    "height": 180
+}
+
+
+
 client = OpenAI(
     api_key=CHATGPT_API_KEY  # Using the hardcoded API key directly
 )
@@ -52,30 +64,42 @@ def get_response():
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
-
     user_message = data.get("message", "")
 
     if not user_message.strip():
         return jsonify({"reply": "I didn't catch that. Can you try again?"})
 
+    # Generate a personalized prompt using the stored biometric data
+    base_prompt = "You are a fitness and wellness assistant."
+    bio_info = f"""
+    Here is the user's biometric data:
+    - Age: {stored_biometric_data['age']} years
+    - Weight: {stored_biometric_data['weight']} kg
+    - Height: {stored_biometric_data['height']} cm
+    """
+    personalized_prompt = f"{base_prompt}\n{bio_info}\n"
+
     try:
-        # Call the OpenAI API's new chat function
+        # Call the OpenAI Chat API
         chat_completion = client.chat.completions.create(
             messages=[
+                {"role": "system", "content": personalized_prompt},
                 {"role": "user", "content": user_message}
             ],
-            model="gpt-3.5-turbo",  # Use the appropriate model, e.g., "gpt-4"
+            model="gpt-3.5-turbo",
             max_tokens=150,
             temperature=0.7
         )
 
-        # Extract the reply from the response using dot notation
+        # Extract the reply
         reply = chat_completion.choices[0].message.content.strip()
         return jsonify({"reply": reply})
 
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"reply": "I'm having trouble processing that. Please try again later."})
+
+
 
 
 @app.route("/")
