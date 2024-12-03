@@ -228,20 +228,34 @@ def index():
 @app.route('/generate_plan', methods=['POST'])
 @limiter.limit("5 per minute")
 def generate_plan():
-    user_data = request.get_json()
-    if not user_data:
-        return jsonify({"error": "No data provided"}), 400    
+    data = request.get_json()
 
-    # Prompt construction
-    user_prompt = f"""
-    You are a fitness coach. Based on the following information, create a weekly fitness schedule. Each day should have activities with start and end times in the format 'HH:MM AM/PM to HH:MM AM/PM':
-    Name: {user_data.get('name', 'Unknown')},
-    Age: {user_data.get('age', 'Unknown')},
-    Goals: {user_data.get('goals', 'Unknown')}.
+    # Check if a persona is set or passed in the request
+    persona_id = data.get("persona", None)
+    if current_persona and not persona_id:
+        persona_id = current_persona.get("name")  # Use the current persona name if available
+
+    # Retrieve persona data
+    persona_data = personas.get(persona_id, current_persona)  # Use current_persona if persona_id is not found
+    if not persona_data:
+        return jsonify({"error": "Invalid persona selected. Please try again."}), 400
+
+    # Construct the personalized prompt
+    base_prompt = "You are a fitness coach."
+    persona_info = f"""
+    Based on the following information, create a weekly fitness schedule. Each day should have activities with start and end times in the format 'HH:MM AM/PM to HH:MM AM/PM':
+    - Name: {persona_data['name']}
+    - Age: {persona_data['age']}
+    - Occupation: {persona_data['occupation']}
+    - Lifestyle: {persona_data['lifestyle']}
+    - Goals: {persona_data['goals']}
+    - Pain Points: {persona_data['painPoints']}
+    - Motivations: {persona_data['motivations']}
     """
-    
+    personalized_prompt = f"{base_prompt}\n{persona_info}"
+
     # Call the ChatGPT API
-    response = call_chatgpt_api(user_prompt)
+    response = call_chatgpt_api(personalized_prompt)
     if not response:
         return jsonify({"error": "Failed to generate plan. Check API connectivity or API key validity."}), 500
 
@@ -253,6 +267,7 @@ def generate_plan():
     except Exception as e:
         print(f"Error parsing ChatGPT response: {e}")
         return jsonify({"error": "Failed to parse ChatGPT response."}), 500
+
 
 def call_chatgpt_api(prompt):
     api_url = "https://api.openai.com/v1/chat/completions"
