@@ -340,7 +340,49 @@ def parse_chatgpt_response_to_events(response):
         current_date += timedelta(days=1)
 
     return events
+    
+@app.route('/gen_nutrition', methods=['POST'])
+def nutrition_plan():
+    data = request.get_json()
 
+    persona_id = data.get("persona", None)
+    if current_persona and not persona_id:
+        persona_id = current_persona.get("name")
+
+    persona_data = personas.get(persona_id, current_persona)
+    if not persona_data:
+        return jsonify({"error": "Invalid persona selected. Please try again."}), 400
+
+    base_prompt = "You are a nutritionist."
+    persona_info = f"""
+    Based on the following information, create a weekly meal plan. Each day should have 2-3 meals depending on dietary requirements.:
+    - Name: {persona_data['name']}
+    - Age: {persona_data['age']}
+    - Occupation: {persona_data['occupation']}
+    - Lifestyle: {persona_data['lifestyle']}
+    - Goals: {persona_data['goals']}
+    - Pain Points: {persona_data['painPoints']}
+    - Motivations: {persona_data['motivations']}
+    """
+    personalized_prompt = f"{base_prompt}\n{persona_info}"
+
+    # AI Call
+    n_response = call_chatgpt_api(personalized_prompt)
+    if not n_response:
+        return jsonify({"error": "Failed to generate plan. Check API connectivity or API key validity."}), 500
+
+    try:
+        # Extract the AI-generated plan
+        plan = n_response.get("choices", [])[0].get("message", {}).get("content", "")
+        if not plan:
+            raise ValueError("Plan content is empty or improperly formatted.")
+        
+        print("Generated Nutrition Plan:", plan)  # Debug print
+        return jsonify({"response": plan}), 200  # Send back the plan as 'response'
+
+    except Exception as e:
+        print(f"Error extracting nutrition plan: {e}")
+        return jsonify({"error": "Failed to extract nutrition plan."}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

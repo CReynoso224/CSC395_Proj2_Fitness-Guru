@@ -131,7 +131,51 @@ function sendPersonInfo() {
         });
 }
 
+//NUTRITION PLAN STUFF HERE
+function sendPersonInfoNut() {
+    const selectedPersona = document.getElementById('goalSelect').value;
 
+    if (!selectedPersona) {
+        console.error("No persona selected.");
+        return;
+    }
+
+    fetch('/gen_nutrition', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ persona: selectedPersona })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.response) { 
+                console.log("Nutrition plan received:", data.response);
+                displayNutritionText(data.response);
+            } else {
+                console.error("Invalid nutrition plan data received from the server.");
+                displayNutritionText("No nutrition plan available. Please try again."); 
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching nutrition plan:", error);
+            displayNutritionText("An error occurred while fetching the nutrition plan."); 
+        });
+}
+
+function displayNutritionText(plan) {
+    const textArea = document.getElementById('nutritionPlanText');
+    if (textArea) {
+        // Update the text area with the plan or show a default message if the plan is empty
+        textArea.textContent = plan || "No nutrition plan available. Please try again.";
+    } else {
+        console.error("Nutrition plan text area not found.");
+    }
+}
+
+
+
+//END NUTRITION PLAN
 
 function goToPage(pageId) {
     // Hide all pages
