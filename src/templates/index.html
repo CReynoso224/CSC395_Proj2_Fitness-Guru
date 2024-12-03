@@ -55,23 +55,24 @@
         <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
 
-    <div id="page4" class="page">
-        <h1>My Bio</h1>
-        <div id="bioSection">
-            <img src="../static/images/DefualtPFP.png" alt="Profile Picture">
-            <div class="bio-text">
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Age:</strong> 30</p>
-                <p><strong>Interests:</strong> Fitness, Health, Wellness</p>
-                <p><strong>About Me:</strong> Passionate about maintaining a healthy lifestyle and helping others achieve their fitness goals.</p>
-                <p><strong>Goal:</strong> <span id="userGoalDisplay">Lose 10 pounds</span></p>
-            </div>
+<div id="page4" class="page">
+    <h1>My Bio</h1>
+    <div id="bioSection">
+        <div class="bio-text">
+            <p><strong>Name:</strong> <span id="bioName">John Doe</span></p>
+            <p><strong>Age:</strong> <span id="bioAge">30</span></p>
+            <p><strong>Occupation:</strong> <span id="bioOccupation">Software Developer</span></p>
+            <p><strong>Lifestyle:</strong> <span id="bioLifestyle">Fitness, Health, Wellness</span></p>
+            <p><strong>Goals:</strong> <span id="bioGoals">Lose 10 pounds</span></p>
+            <p><strong>Pain Points:</strong> <span id="bioPainPoints">N/A</span></p>
+            <p><strong>Motivations:</strong> <span id="bioMotivations">N/A</span></p>
         </div>
-        <button class="red-button" onclick="goToPage('page3')">Back</button>
-        <button onclick="goToPage('page1')">Home</button>
-        <button class="red-button" onclick="sendPersonInfo()">Generate Plan</button>
-        <button onclick="goToPage('page5')">Calendar</button>
     </div>
+    <button class="red-button" onclick="goToPage('page3')">Back</button>
+    <button onclick="goToPage('page1')">Home</button>
+    <button class="red-button" onclick="sendPersonInfo()">Generate Plan</button>
+    <button onclick="goToPage('page5')">Calendar</button>
+</div>
 
 <div id="page5" class="page">
     <div class="content">

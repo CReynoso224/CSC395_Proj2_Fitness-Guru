@@ -455,3 +455,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function populateBioSection() {
+    const selectedPersona = document.getElementById('goalSelect').value;
+
+    // Get the bio section fields
+    const bioName = document.getElementById("bioName");
+    const bioAge = document.getElementById("bioAge");
+    const bioOccupation = document.getElementById("bioOccupation");
+    const bioLifestyle = document.getElementById("bioLifestyle");
+    const bioGoals = document.getElementById("bioGoals");
+    const bioPainPoints = document.getElementById("bioPainPoints");
+    const bioMotivations = document.getElementById("bioMotivations");
+
+    if (personas[selectedPersona]) {
+        // Update the bio section with the selected persona's data
+        const persona = personas[selectedPersona];
+        bioName.textContent = persona.name;
+        bioAge.textContent = persona.age;
+        bioOccupation.textContent = persona.occupation;
+        bioLifestyle.textContent = persona.lifestyle;
+        bioGoals.textContent = persona.goals;
+        bioPainPoints.textContent = persona.painPoints;
+        bioMotivations.textContent = persona.motivations;
+    } else if (selectedPersona === "other") {
+        // For 'Other', provide default or custom values
+        bioName.textContent = "Custom Persona";
+        bioAge.textContent = "N/A";
+        bioOccupation.textContent = "N/A";
+        bioLifestyle.textContent = "N/A";
+        bioGoals.textContent = document.getElementById("otherInput").value || "Custom Goal";
+        bioPainPoints.textContent = "N/A";
+        bioMotivations.textContent = "N/A";
+    } else {
+        // Default state if no persona is selected
+        bioName.textContent = "John Doe";
+        bioAge.textContent = "30";
+        bioOccupation.textContent = "Software Developer";
+        bioLifestyle.textContent = "Fitness, Health, Wellness";
+        bioGoals.textContent = "Lose 10 pounds";
+        bioPainPoints.textContent = "N/A";
+        bioMotivations.textContent = "N/A";
+    }
+}
+
+// Call this function when navigating to #page4
+document.addEventListener("DOMContentLoaded", () => {
+    const bioPageButton = document.querySelector('button[onclick="goToPage(\'page4\')"]');
+    if (bioPageButton) {
+        bioPageButton.addEventListener("click", populateBioSection);
+    }
+});
