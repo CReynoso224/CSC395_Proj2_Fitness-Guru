@@ -1,4 +1,67 @@
 // Persona data
+
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    if (calendarEl) {
+        // Initialize the calendar
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: [] // Placeholder for events
+        });
+
+        // Save the calendar globally so it can be updated when switching pages
+        window.calendar = calendar;
+
+        // Render the calendar
+        calendar.render();
+
+        // Fetch events from the Flask server
+        fetch('http://localhost:5000/generate_plan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: "John Shepard",
+                age: 30,
+                goals: "Lose 20 pounds and improve overall fitness."
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched events:", data.events);
+            calendar.addEventSource(data.events); // Add events to the calendar
+        })
+        .catch(error => {
+            console.error("Error fetching events:", error);
+        });
+    }
+    
+    window.goToPage = function goToPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
+
+            // Trigger FullCalendar update when showing #page5
+            if (pageId === 'page5' && window.calendar) {
+                window.calendar.updateSize();
+            }
+        }
+    };
+});
+
+
+
 const personas = {
     "john-shepard": {
         name: "John Shepard",
