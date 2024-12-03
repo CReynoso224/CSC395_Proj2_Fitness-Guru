@@ -97,43 +97,40 @@ const personas = {
 };
 
 // hard coded test to make sure stuff is getting sent over
-function sendPersonInfo() {
-    const personInfo = {
-        name: "John Shepard",
-        age: 30,
-        occupation: "Software Developer",
-        lifestyle: "Sedentary due to work, motivated to lose weight and improve health.",
-        goals: "Lose 20 pounds and improve overall fitness.",
-        painPoints: "Struggles to find time for exercise, overwhelmed by diet advice, needs structured guidance.",
-        motivations: "Avoid long-term health risks, stay motivated through tracking, tailored diet suggestions."
-    };
 
-    fetch('http://localhost:5000/generate_plan', {
+function sendPersonInfo() {
+    const selectedPersona = document.getElementById('goalSelect').value;
+    
+
+    if (!selectedPersona) {
+        console.error("No persona selected.");
+        return;
+    }
+
+    fetch('/generate_plan', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(personInfo)
+        body: JSON.stringify({ persona: selectedPersona })
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Response from server:', data);
+            if (data.events && Array.isArray(data.events)) {
+                console.log("Fetched events:", data.events);
+
+                // Clear existing events and add new ones
+                calendar.getEventSources().forEach(source => source.remove());
+                calendar.addEventSource(data.events);
+            } else {
+                console.error("Invalid events received from the server.");
+            }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error("Error fetching events:", error);
         });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        events: '/calendar/events'  // Fetch events from Flask
-    });
-
-    calendar.render();
-});
 
 
 function goToPage(pageId) {
