@@ -5,6 +5,8 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from datetime import datetime, timedelta
 import openai
+import json
+from flask import Flask, request, jsonify
 from openai import OpenAI
 import os
 
@@ -60,24 +62,41 @@ def get_response():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+def load_personas():
+    with open("personas.json", "r") as file:
+        return json.load(file)
+
+personas = load_personas()
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
     user_message = data.get("message", "")
+    persona_id = data.get("persona", "john-shepard")  # Default persona if not provided
 
     if not user_message.strip():
         return jsonify({"reply": "I didn't catch that. Can you try again?"})
 
-    # Generate a personalized prompt using the stored biometric data
+    # Retrieve persona data
+    persona_data = personas.get(persona_id, {})
+    if not persona_data:
+        return jsonify({"reply": "Invalid persona selected. Please try again."})
+
+    # Generate the personalized prompt
     base_prompt = "You are a fitness and wellness assistant."
-    bio_info = f"""
-    Here is the user's biometric data:
-    - Age: {stored_biometric_data['age']} years
-    - Weight: {stored_biometric_data['weight']} kg
-    - Height: {stored_biometric_data['height']} cm
+    persona_info = f"""
+    This is the user's profile:
+    - Name: {persona_data['name']}
+    - Age: {persona_data['age']}
+    - Occupation: {persona_data['occupation']}
+    - Lifestyle: {persona_data['lifestyle']}
+    - Goals: {persona_data['goals']}
+    - Pain Points: {persona_data['painPoints']}
+    - Motivations: {persona_data['motivations']}
     """
-    personalized_prompt = f"{base_prompt}\n{bio_info}\n"
+    personalized_prompt = f"{base_prompt}\n{persona_info}\n"
 
     try:
         # Call the OpenAI Chat API
@@ -98,6 +117,7 @@ def chat():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"reply": "I'm having trouble processing that. Please try again later."})
+
 
 
 
