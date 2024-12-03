@@ -169,31 +169,44 @@ def parse_chatgpt_response_to_events(response):
     if not response_text:
         raise ValueError("Response content is empty or improperly formatted.")
 
+    print("Response content:", response_text)  # Debugging print
+
     for day in days:
-        if day in response_text:
-            # Extract activities for the day
-            day_section = response_text.split(day + ":")[1].split("\n\n")[0]
-            activities = day_section.strip().split("\n- ")
-            for activity in activities:
-                if ":" in activity:
-                    time_range, title = activity.split(": ", 1)
-                    
-                    # Clean up the time_range
-                    time_range = time_range.replace("-", "").strip()
-                    
-                    # Split and parse start and end times
-                    start_time, end_time = time_range.split(" to ")
-                    start = datetime.strptime(f"{current_date} {start_time}", "%Y-%m-%d %I:%M %p")
-                    end = datetime.strptime(f"{current_date} {end_time}", "%Y-%m-%d %I:%M %p")
-                    
-                    # Add event to the list
-                    events.append({
-                        "title": title.strip(),
-                        "start": start.isoformat(),
-                        "end": end.isoformat()
-                    })
-            current_date += timedelta(days=1)
+        if day + ":" in response_text:
+            try:
+                # Extract activities for the day
+                day_section = response_text.split(day + ":")[1].split("\n\n")[0]
+                activities = day_section.strip().split("\n- ")
+                for activity in activities:
+                    if ":" in activity or " - " in activity:
+                        # Handle different separators
+                        if " - " in activity:
+                            time_range, title = activity.split(" - ", 1)
+                        else:
+                            time_range, title = activity.split(": ", 1)
+
+                        # Clean up the time_range
+                        time_range = time_range.replace("-", "").strip()
+
+                        # Split and parse start and end times
+                        start_time, end_time = time_range.split(" to ")
+                        start = datetime.strptime(f"{current_date} {start_time}", "%Y-%m-%d %I:%M %p")
+                        end = datetime.strptime(f"{current_date} {end_time}", "%Y-%m-%d %I:%M %p")
+
+                        # Add event to the list
+                        events.append({
+                            "title": title.strip(),
+                            "start": start.isoformat(),
+                            "end": end.isoformat()
+                        })
+            except Exception as e:
+                print(f"Error parsing activities for {day}: {e}")
+        else:
+            print(f"Day {day} not found in response_text")  # Debugging print
+        current_date += timedelta(days=1)
+
     return events
+
 
 if __name__ == '__main__':
     app.run(debug=True)
