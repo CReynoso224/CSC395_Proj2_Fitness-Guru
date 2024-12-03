@@ -33,16 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 goals: "Lose 20 pounds and improve overall fitness."
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Fetched events:", data.events);
-            calendar.addEventSource(data.events); // Add events to the calendar
-        })
-        .catch(error => {
-            console.error("Error fetching events:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log("Fetched events:", data.events);
+                calendar.addEventSource(data.events); // Add events to the calendar
+            })
+            .catch(error => {
+                console.error("Error fetching events:", error);
+            });
     }
-    
+
     window.goToPage = function goToPage(pageId) {
         document.querySelectorAll('.page').forEach(page => {
             page.classList.remove('active');
@@ -92,20 +92,20 @@ const personas = {
         motivations: "Eager to improve running performance, enjoys the challenge of training, and wants personalized progress tracking to stay motivated.",
     },
 
-    
+
     // You can add more personas here
 };
 
 // hard coded test to make sure stuff is getting sent over
 function sendPersonInfo() {
     const personInfo = {
-            name: "John Shepard",
-            age: 30,
-            occupation: "Software Developer",
-            lifestyle: "Sedentary due to work, motivated to lose weight and improve health.",
-            goals: "Lose 20 pounds and improve overall fitness.",
-            painPoints: "Struggles to find time for exercise, overwhelmed by diet advice, needs structured guidance.",
-            motivations: "Avoid long-term health risks, stay motivated through tracking, tailored diet suggestions."
+        name: "John Shepard",
+        age: 30,
+        occupation: "Software Developer",
+        lifestyle: "Sedentary due to work, motivated to lose weight and improve health.",
+        goals: "Lose 20 pounds and improve overall fitness.",
+        painPoints: "Struggles to find time for exercise, overwhelmed by diet advice, needs structured guidance.",
+        motivations: "Avoid long-term health risks, stay motivated through tracking, tailored diet suggestions."
     };
 
     fetch('http://localhost:5000/generate_plan', {
@@ -115,13 +115,13 @@ function sendPersonInfo() {
         },
         body: JSON.stringify(personInfo)
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Response from server:', data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response from server:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 
@@ -151,21 +151,33 @@ function toggleOtherInput() {
     }
 }
 
-// Function to load persona data when a persona is selected from the dropdown
 function loadPersonaData() {
-    const selectElement = document.getElementById('goalSelect');
-    const selectedPersona = selectElement.value;
-    
-    if (personas[selectedPersona]) {
-        const persona = personas[selectedPersona];
-        document.getElementById('otherInput').style.display = 'none'; // Hide "Other" input if a persona is selected
-        displayPersonaInfo(persona); // Display persona info
-    } else {
-        document.getElementById('otherInput').style.display = 'block'; // Show "Other" input if no persona or "Other" is selected
-        clearPersonaInfo(); // Clear previously displayed persona info
+    const selectedPersona = document.getElementById("goalSelect").value;
+
+    if (selectedPersona === "other") {
+        // Clear existing persona data if 'Other' is selected
+        document.getElementById("otherInput").style.display = "block";
+    } else if (selectedPersona) {
+        // Hide the input for 'Other'
+        document.getElementById("otherInput").style.display = "none";
+
+        // Send the selected persona to the backend
+        fetch("/set_persona", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ persona: selectedPersona }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Persona loaded:", data.message);
+            })
+            .catch(error => {
+                console.error("Error loading persona:", error);
+            });
     }
 }
-
 // Function to display selected persona's information
 function displayPersonaInfo(persona) {
     document.getElementById('personaInfo').innerHTML = `
@@ -252,9 +264,9 @@ async function sendMessage() {
 window.onload = function () {
     // Clear the goal from localStorage when the page loads
     localStorage.removeItem('userGoal');
-    
+
     // Optionally, reset the displayed goal text to the default (if needed)
-    document.getElementById("userGoalDisplay").textContent = "Lose 10 pounds"; 
+    document.getElementById("userGoalDisplay").textContent = "Lose 10 pounds";
 };
 
 // Wait for the DOM to be fully loaded before executing the following
@@ -296,9 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
 window.onload = function () {
     // Clear the goal from localStorage when the page loads
     localStorage.removeItem('userGoal');
-    
+
     // Optionally, reset the displayed goal text to the default (if needed)
-    document.getElementById("userGoalDisplay").textContent = "Lose 10 pounds"; 
+    document.getElementById("userGoalDisplay").textContent = "Lose 10 pounds";
 
     // Reset page sections to default state
     const pageIds = ["page1", "page2", "page3", "page4"]; // Add any other page IDs here if necessary
