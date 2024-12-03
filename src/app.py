@@ -44,6 +44,58 @@ client = OpenAI(
 )
 
 
+@app.route("/chat/calendar", methods=["POST"])
+def chat_with_calendar():
+    data = request.get_json()
+    user_message = data.get("message", "").lower()
+
+    # Fetch events from the calendar API
+    response = requests.get("http://localhost:5000/calendar/events")
+    if response.status_code != 200:
+        return jsonify({"reply": "Sorry, I couldn't fetch your calendar events right now."}), 500
+
+    events = response.json()
+    today = datetime.now().date()
+
+    # Filter today's events
+    if "today" in user_message:
+        today_events = [
+            event for event in events
+            if datetime.fromisoformat(event["start"]).date() == today
+        ]
+
+        if not today_events:
+            return jsonify({"reply": "You have no events scheduled for today."})
+
+        # Format events for response
+        formatted_events = "\n".join(
+            [f"{event['title']} from {event['start']} to {event['end']}" for event in today_events]
+        )
+        return jsonify({"reply": f"Here are your events for today:\n{formatted_events}"})
+
+    return jsonify({"reply": "I can help you with your calendar! Ask about today's events or upcoming events."})
+
+
+
+@app.route("/calendar/events", methods=["GET"])
+def get_calendar_events():
+    # Example: Hardcoded or dynamic event data
+    events = [
+        {
+            "title": "Morning Yoga",
+            "start": "2024-12-03T07:00:00",
+            "end": "2024-12-03T08:00:00"
+        },
+        {
+            "title": "Team Meeting",
+            "start": "2024-12-03T10:00:00",
+            "end": "2024-12-03T11:00:00"
+        }
+    ]
+    return jsonify(events)
+
+
+
 
 def load_personas():
     """Load personas from a JSON file."""
@@ -74,10 +126,19 @@ def call_chatgpt_api(prompt):
         print(f"API Request failed: {e}")
         return None
 
+
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
     user_message = data.get("message", "").strip()
+
+    if "events" in user_message or "calendar" in user_message:
+        # Call the calendar chat endpoint
+        calendar_response = requests.post(
+            "http://localhost:5000/chat/calendar",
+            json={"message": user_message}
+        )
+        return calendar_response.json()
 
     # Check if a persona is set, otherwise use the one passed in the request
     persona_id = data.get("persona", None)

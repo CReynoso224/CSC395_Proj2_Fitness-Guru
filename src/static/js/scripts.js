@@ -124,6 +124,16 @@ function sendPersonInfo() {
         });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: '/calendar/events'  // Fetch events from Flask
+    });
+
+    calendar.render();
+});
 
 
 function goToPage(pageId) {
@@ -208,7 +218,6 @@ window.onload = function () {
     goalSelect.addEventListener('change', toggleOtherInput);
 };
 
-// Function to send a message
 async function sendMessage() {
     const userInput = document.getElementById("user-input").value;
     const chatMessages = document.getElementById("chat-messages");
@@ -224,7 +233,6 @@ async function sendMessage() {
     // Clear input
     document.getElementById("user-input").value = "";
 
-    // Send message to the server
     try {
         const response = await fetch("/chat", {
             method: "POST",
@@ -242,6 +250,33 @@ async function sendMessage() {
             botMessageDiv.className = "bot-message";
             botMessageDiv.textContent = `Fitness Guru: ${data.reply}`;
             chatMessages.appendChild(botMessageDiv);
+
+            // Check if the response includes event information (for simplicity, assume it's in 'data.reply')
+            if (data.reply.includes("add to calendar")) {
+                const newEvent = {
+                    title: "Workout",
+                    start: "2024-12-05T09:00:00", // Example of a date/time, you can parse it dynamically
+                    end: "2024-12-05T10:00:00", // End time
+                    description: "Morning workout session"
+                };
+
+                // Send event details to the backend to update the calendar
+                await fetch('http://localhost:5000/update_calendar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ event: newEvent })
+                })
+                    .then(response => response.json())
+                    .then(updatedData => {
+                        console.log("Updated events:", updatedData.events);
+                        window.calendar.addEventSource(updatedData.events); // Update the calendar with new event
+                    })
+                    .catch(error => {
+                        console.error("Error updating calendar:", error);
+                    });
+            }
         } else {
             throw new Error("Failed to get a response from the server");
         }
@@ -258,6 +293,7 @@ async function sendMessage() {
     // Scroll to the bottom of the chat container
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
 
 
 // Reset goal on page load
