@@ -28,17 +28,17 @@ The product is designed for individuals across all fitness levels, offering cust
 
 2.  Navigation:
 
-- Managed via goToPage() JavaScript function, toggling the active class.
+      - Managed via goToPage() JavaScript function, toggling the active class.
 
 3.  Dynamic Features:
 
-- Persona and custom goal handling.
-- Backend integration hinted for bio and meal plan generation.
+      - Persona and custom goal handling.
+      - Backend integration hinted for bio and meal plan generation.
 
 4.  Styling & Libraries:
 
-- External CSS and JavaScript for functionality and styling.
-- FullCalendar included via CDN for the calendar feature.
+      - External CSS and JavaScript for functionality and styling.
+      - FullCalendar included via CDN for the calendar feature.
 
 **Dockerfile:**
 
@@ -47,17 +47,17 @@ The product is designed for individuals across all fitness levels, offering cust
 **app.py:**
 - Handles user interactions, personalized fitness schedules, and chat functionality. It features the following core functionalities:
 
-1.  Personas Management: Users can load predefined personas or create custom ones, which include personal details like goals, lifestyle, and motivations.
+      1.  Personas Management: Users can load predefined personas or create custom ones, which include personal details like goals, lifestyle, and motivations.
 
-2.  ChatGPT Integration: Utilizes OpenAI's GPT-3.5 API to generate responses tailored to user inputs and personas.
+      2.  ChatGPT Integration: Utilizes OpenAI's GPT-3.5 API to generate responses tailored to user inputs and personas.
 
-3.  Calendar Integration: Provides endpoints to fetch and display events, including filtering for today's and upcoming events.
+      3.  Calendar Integration: Provides endpoints to fetch and display events, including filtering for today's and upcoming events.
 
-4.  Fitness Plan Generation: Creates personalized weekly fitness schedules using ChatGPT based on user persona data.
+      4.  Fitness Plan Generation: Creates personalized weekly fitness schedules using ChatGPT based on user persona data.
 
-5.  Rate Limiting: Protects certain endpoints with rate limits to prevent abuse.
+      5.  Rate Limiting: Protects certain endpoints with rate limits to prevent abuse.
 
-6.  Web Interface: Serves an HTML-based frontend using templates for interaction.
+      6.  Web Interface: Serves an HTML-based frontend using templates for interaction.
 
 - Global variables are used to store events, and personas are loaded from a JSON file. The app communicates with external APIs for data processing and responses.
 
