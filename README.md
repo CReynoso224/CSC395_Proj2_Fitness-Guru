@@ -71,29 +71,29 @@ To run locally:
 
 1.  Install Docker and Docker Compose (if not already installed):
 
-Docker Installation Guide
-Docker Compose Installation Guide
+- look up Docker Installation Guide
+- look up Docker Compose Installation Guide
 
 2.  Set Up Files:
 
-Ensure you have all files (app.py, index.html, and related assets) in the same directory with the Dockerfile and docker-compose.yml.
-Add Required Files:
+- Ensure you have all files (app.py, index.html, and related assets) in the same directory with the Dockerfile and docker-compose.yml.
 
 3.  Set API Key:
 
-In your environment, set the CHATGPT_API_KEY using:
+- In your environment, set the CHATGPT_API_KEY using:
 
-export CHATGPT_API_KEY="your_openai_api_key"
+      export CHATGPT_API_KEY="your_openai_api_key"
 
 4.  Start the Application:
 
-Run the following command in the project directory:
+- Run the following command in the project directory:
 
-docker-compose up
-Access the Application:
+      docker-compose up
+  
+5.  Access the Application:
 
-Open your browser and navigate to http://localhost:5000.
-This will launch the Flask application alongside a PostgreSQL database, enabling the full functionality of the web app.
+- Open your browser and navigate to http://localhost:5000.
+- This will launch the Flask application alongside a PostgreSQL database, enabling the full functionality of the web app.
 
 ## Summary:
 
