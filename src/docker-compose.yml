@@ -10,7 +10,7 @@ services:
       - "5000:5000"  # Map container port 5000 to host port 5000
     environment:
       CHATGPT_API_KEY: "${CHATGPT_API_KEY}"  # Inject API key from environment
-      FLASK_ENV: development
+      FLASK_DEBUG: 1  # Enable Flask debug mode (equivalent to FLASK_ENV=development)
     volumes:
       - .:/app  # Mount the current directory for live code updates
     depends_on:
