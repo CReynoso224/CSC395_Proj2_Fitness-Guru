@@ -72,21 +72,21 @@ The product is designed for individuals across all fitness levels, offering cust
 
 - Setting Up the Project Locally
 
-- 1. Clone the Repository
+ 1. Clone the Repository
 
 - Clone the repository to your local machine using Git:
 
       git clone https://github.com/yourusername/fitness-guru.git
       cd fitness-guru
 
-- 2. Install Docker
+ 2. Install Docker
 
 - Make sure Docker and Docker Compose are installed on your machine. You can download them from the official website:
 
           Install Docker
           Install Docker Compose
 
-- 3. Set Up Environment Variables
+ 3. Set Up Environment Variables
 
 - The project requires a ChatGPT API key to interact with the OpenAI API.
 
@@ -96,7 +96,7 @@ The product is designed for individuals across all fitness levels, offering cust
 
           CHATGPT_API_KEY=your-api-key-here
 
-- 4. Build and Run the Docker Containers
+ 4. Build and Run the Docker Containers
 
 - Once you have Docker and Docker Compose set up, you can build and run the containers using the following command:
 
@@ -107,7 +107,7 @@ The product is designed for individuals across all fitness levels, offering cust
           Build the Docker images (Flask app and PostgreSQL database).
           Start the containers for the web app (flask_app) and database (postgres_db).
 
-- 5. Access the Application
+ 5. Access the Application
 
 - Once the containers are up and running, you can access the web app in your browser at:
 
@@ -115,13 +115,13 @@ The product is designed for individuals across all fitness levels, offering cust
 
 - The Flask app will run on port 5000 by default.
   
-- 6. Stopping the Containers
+ 6. Stopping the Containers
 
 - When you're done, you can stop the containers by running:
 
       docker-compose down
 
-- 7. Running Tests (Optional)
+ 7. Running Tests (Optional)
 
 
 - If you want to run the unit tests to ensure everything is working as expected, use the following command:
@@ -132,15 +132,15 @@ The product is designed for individuals across all fitness levels, offering cust
 - Troubleshooting
 
 
-- 1. Missing Dependencies: If you get errors related to missing dependencies, you may need to rebuild the container:
+ 1. Missing Dependencies: If you get errors related to missing dependencies, you may need to rebuild the container:
 
       docker-compose up --build
 
-- 2. Database Connection Issues: Ensure the postgres_db container is running properly. If there are issues with the database connection, try restarting the containers:
+ 2. Database Connection Issues: Ensure the postgres_db container is running properly. If there are issues with the database connection, try restarting the containers:
 
           docker-compose restart
 
-- 3. .env File Not Found: Make sure the .env file exists in the root of your project and contains your OpenAI API key. Without it, the app won't be able to connect to the OpenAI API.
+ 3. .env File Not Found: Make sure the .env file exists in the root of your project and contains your OpenAI API key. Without it, the app won't be able to connect to the OpenAI API.
 
 Additional Notes:
 
