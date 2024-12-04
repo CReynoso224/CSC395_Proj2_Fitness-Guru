@@ -9,6 +9,8 @@ import json
 from flask import Flask, request, jsonify
 from openai import OpenAI
 import os
+from flask import redirect, url_for
+import unittest
 
 app = Flask(__name__)
 CORS(app)
@@ -408,6 +410,36 @@ def nutrition_plan():
     except Exception as e:
         print(f"Error extracting nutrition plan: {e}")
         return jsonify({"error": "Failed to extract nutrition plan."}), 500
+    
+# GET route for /api/data
+@app.route('/api/data', methods=['GET'])
+def api_data():
+    return jsonify({"message": "API is working"}), 200
+
+# POST route for /api/data
+@app.route('/api/data', methods=['POST'])
+def post_api_data():
+    data = request.get_json()  # Get the posted JSON data
+    if not data:
+        return jsonify({"error": "No data provided"}), 400  # Return error if no data provided
+
+    # Process the data (you can implement any logic here)
+    return jsonify({"message": "Data received successfully"}), 201
+
+@app.route('/form', methods=['POST'])
+def form_submission():
+    # Simulate form handling and redirect
+    return redirect(url_for('index'))  # Redirects to the index page (or wherever you want)
+
+@app.route('/fullcalendar')
+def fullcalendar():
+    return redirect('/')
+
+@app.route('/bio')
+def bio():
+    return redirect('/')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

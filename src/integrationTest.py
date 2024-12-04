@@ -35,8 +35,9 @@ class FlaskBackendTests(unittest.TestCase):
 
     # Test POST data to /api/data
     def test_post_data(self):
-        response = self.app.post('/api/data', data={'key': 'value'})  # Post some data to /api/data
+        response = self.app.post('/api/data', json={'key': 'value'})  # Send data as JSON
         self.assertEqual(response.status_code, 201)  # Expecting 201 Created for POST request
+
 
     # Test redirect after form submission (POST to /form)
     def test_redirect_after_form_submission(self):
