@@ -47,17 +47,12 @@ The product is designed for individuals across all fitness levels, offering cust
 **app.py:**
 - Handles user interactions, personalized fitness schedules, and chat functionality. It features the following core functionalities:
 
-      1.  Personas Management: Users can load predefined personas or create custom ones, which include personal details like goals, lifestyle, and motivations.
-
-      2.  ChatGPT Integration: Utilizes OpenAI's GPT-3.5 API to generate responses tailored to user inputs and personas.
-
-      3.  Calendar Integration: Provides endpoints to fetch and display events, including filtering for today's and upcoming events.
-
-      4.  Fitness Plan Generation: Creates personalized weekly fitness schedules using ChatGPT based on user persona data.
-
-      5.  Rate Limiting: Protects certain endpoints with rate limits to prevent abuse.
-
-      6.  Web Interface: Serves an HTML-based frontend using templates for interaction.
+   1.  Personas Management: Users can load predefined personas or create custom ones, which include personal details like goals, lifestyle, and motivations.
+   2.  ChatGPT Integration: Utilizes OpenAI's GPT-3.5 API to generate responses tailored to user inputs and personas.
+   3.  Calendar Integration: Provides endpoints to fetch and display events, including filtering for today's and upcoming events.
+   4.  Fitness Plan Generation: Creates personalized weekly fitness schedules using ChatGPT based on user persona data.
+   5.  Rate Limiting: Protects certain endpoints with rate limits to prevent abuse.
+   6.  Web Interface: Serves an HTML-based frontend using templates for interaction.
 
 - Global variables are used to store events, and personas are loaded from a JSON file. The app communicates with external APIs for data processing and responses.
 
@@ -73,29 +68,29 @@ To run locally:
 
 1.  Install Docker and Docker Compose (if not already installed):
 
-- look up Docker Installation Guide
-- look up Docker Compose Installation Guide
+      - look up Docker Installation Guide
+      - look up Docker Compose Installation Guide
 
 2.  Set Up Files:
 
-- Ensure you have all files (app.py, index.html, and related assets) in the same directory with the Dockerfile and docker-compose.yml.
+      - Ensure you have all files (app.py, index.html, and related assets) in the same directory with the Dockerfile and docker-compose.yml.
 
 3.  Set API Key:
 
-- In your environment, set the CHATGPT_API_KEY using:
+      - In your environment, set the CHATGPT_API_KEY using:
 
-      export CHATGPT_API_KEY="your_openai_api_key"
+            export CHATGPT_API_KEY="your_openai_api_key"
 
 4.  Start the Application:
 
-- Run the following command in the project directory:
+      - Run the following command in the project directory:
 
-      docker-compose up
+            docker-compose up
   
 5.  Access the Application:
 
-- Open your browser and navigate to http://localhost:5000.
-- This will launch the Flask application alongside a PostgreSQL database, enabling the full functionality of the web app.
+      - Open your browser and navigate to http://localhost:5000.
+      - This will launch the Flask application alongside a PostgreSQL database, enabling the full functionality of the web app.
 
 ## Summary:
 
