@@ -153,6 +153,24 @@ Additional Notes:
 
 ## Summary:
 
+Fitness Guru is a web application designed to assist users with personalized fitness and nutrition plans. It uses Flask as the backend framework and integrates with OpenAI's API for personalized recommendations. The project utilizes Docker to containerize both the application and PostgreSQL database, providing a streamlined setup process.
+Key Features:
+
+- Persona Management: Users can select predefined personas or create custom ones for personalized fitness guidance.
+- AI-Powered Fitness Plans: Integrated with OpenAI's API to generate personalized fitness plans.
+- Fitness Calendar: Real-time tracking of fitness events and schedules using FullCalendar.
+- Meal Planning: Provides personalized meal plans based on user data.
+- User-Friendly Interface: Built with HTML, CSS, and JavaScript, providing an intuitive web interface for seamless interaction.
+
+Technologies Used:
+
+- Flask: Python web framework to handle backend logic.
+- PostgreSQL: Database for storing user and event data.
+- Docker: Containerization for both the web app and database to ensure consistent environment setup.
+- OpenAI API: For generating personalized responses based on user inputs.
+- FullCalendar: JavaScript library for displaying and managing calendar events.
+
+This project is designed to be easily deployed locally with Docker and offers both development and production configurations.
 
 
 
