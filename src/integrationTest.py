@@ -1,48 +1,111 @@
 import unittest
+import json
+from app import personas
 from app import app
 
-class FlaskBackendTests(unittest.TestCase):
-    # Set up the app client for testing
-    def setUp(self):
-        self.app = app.test_client()  # Use Flask's test client to simulate requests
-        self.app.testing = True
+class FlaskIntegrationTest(unittest.TestCase):
 
-    # Test the /api/data route for GET request
-    def test_api_response(self):
-        response = self.app.get('/api/data')  # Access the /api/data route
-        self.assertEqual(response.status_code, 200)  # Expecting 200 OK
-        self.assertIn(b"API is working", response.data)  # Check if the response contains expected text
+    @classmethod
+    def setUpClass(cls):
+        """Set up the Flask test client for the entire test suite."""
+        cls.client = app.test_client()
+        cls.valid_personas = ["john-shepard", "cheryl-mason", "alex-rivera"]
 
-    # Test the /bio route (assuming it redirects to /)
-    def test_bio_page_content(self):
-        response = self.app.get('/bio')  # Access the /bio route
-        self.assertEqual(response.status_code, 302)  # Expect a 302 redirect (to /)
+    #fail
+    def test_set_persona(self):
+        # Test for each valid persona in personas.json
+        for persona in ["john-shepard", "cheryl-mason", "alex-rivera"]:
+            response = self.client.post('/set_persona', json={"persona": persona})
+            data = json.loads(response.data)
+            
+            # Fetch the persona's name from the personas dictionary
+            persona_name = personas[persona]['name']
+            
+            # Create the expected success message
+            expected_message = f"Persona '{persona_name}' loaded successfully."
+            
+            # Assert the message is as expected
+            self.assertEqual(data["message"], expected_message)
 
-    # Test form submission (POST request to /form)
-    def test_form_submission(self):
-        response = self.app.post('/form', data={'name': 'test'})  # Simulate form submission
-        self.assertEqual(response.status_code, 302)  # Expecting redirect (302)
+        # Test when no predefined persona is provided
+        response = self.client.post('/set_persona', json={"persona": "other"})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data["message"], "No predefined persona loaded. User will define their own details.")
 
-    # Test the /fullcalendar route (assuming it redirects to /)
-    def test_fullcalendar_inclusion(self):
-        response = self.app.get('/fullcalendar')  # Access the /fullcalendar route
-        self.assertEqual(response.status_code, 302)  # Expect a 302 redirect (to /)
-
-    # Test navigation between pages (assuming redirects from /bio to /)
-    def test_navigation_between_pages(self):
-        response = self.app.get('/bio')  # Navigate to /bio, should redirect to /
-        self.assertEqual(response.status_code, 302)  # Expecting redirect
-
-    # Test POST data to /api/data
-    def test_post_data(self):
-        response = self.app.post('/api/data', json={'key': 'value'})  # Send data as JSON
-        self.assertEqual(response.status_code, 201)  # Expecting 201 Created for POST request
+        # Test when a non-existent persona is provided
+        response = self.client.post('/set_persona', json={"persona": "non_existent_persona"})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data["message"], "Persona not found.")
 
 
-    # Test redirect after form submission (POST to /form)
-    def test_redirect_after_form_submission(self):
-        response = self.app.post('/form', data={'name': 'test'})  # Form submission
-        self.assertEqual(response.status_code, 302)  # Expecting redirect after form submission
+
+
+    def test_get_calendar_events(self):
+        # Test getting calendar events
+        response = self.client.get('/calendar/events')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, list)
+        self.assertGreater(len(data), 0)
+        self.assertIn("title", data[0])
+
+    def test_generate_plan(self):
+        for persona in self.valid_personas:
+            response = self.client.post('/generate_plan', json={"persona": persona})
+            data = json.loads(response.data)
+            self.assertEqual(response.status_code, 200)
+            self.assertIn("events", data)
+            self.assertGreater(len(data["events"]), 0)
+            self.assertIn("title", data["events"][0])
+            self.assertIn("start", data["events"][0])
+            self.assertIn("end", data["events"][0])
+
+    def test_generate_plan_with_invalid_persona(self):
+        response = self.client.post('/generate_plan', json={"persona": "invalid_persona"})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data["error"], "Invalid persona selected. Please try again.")
+
+    def test_nutrition_plan(self):
+        # Test generating a nutrition plan with valid personas
+        for persona in self.valid_personas:
+            response = self.client.post('/gen_nutrition', json={"persona": persona})
+            data = json.loads(response.data)
+            self.assertEqual(response.status_code, 200)
+            self.assertIn("response", data)
+            self.assertGreater(len(data["response"]), 0)
+
+
+    def test_chat(self):
+        # Test valid chat input
+        response = self.client.post('/chat', json={"message": "Tell me about fitness."})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("reply", data)
+
+        # Test invalid message
+        response = self.client.post('/chat', json={"message": ""})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data["reply"], "I didn't catch that. Can you try again?")
+
+
+    def test_get_response(self):
+        # Test getting a response from the /get_response endpoint
+        response = self.client.post('/get_response', json={"user_input": "Tell me about fitness."})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("response", data)
+        self.assertGreater(len(data["response"]), 0)
+
+        # Test no user input
+        response = self.client.post('/get_response', json={})
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data["error"], "No input provided")
+
 
 if __name__ == '__main__':
     unittest.main()
