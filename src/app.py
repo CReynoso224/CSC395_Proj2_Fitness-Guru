@@ -129,16 +129,10 @@ def call_chatgpt_api(prompt):
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    global global_events  # Reference the global events variable
+
     data = request.get_json()
     user_message = data.get("message", "").strip()
-
-    if "events" in user_message or "calendar" in user_message:
-        # Call the calendar chat endpoint
-        calendar_response = requests.post(
-            "http://localhost:5000/chat/calendar",
-            json={"message": user_message}
-        )
-        return calendar_response.json()
 
     # Check if a persona is set, otherwise use the one passed in the request
     persona_id = data.get("persona", None)
@@ -165,7 +159,23 @@ def chat():
     - Pain Points: {persona_data['painPoints']}
     - Motivations: {persona_data['motivations']}
     """
-    personalized_prompt = f"{base_prompt}\n{persona_info}\n{user_message}"
+    personalized_prompt = f"{base_prompt}\n{persona_info}\n{user_message}\n"
+
+    # If the user asks about events or the calendar, just respond with that info
+    if "event" in user_message.lower() or "calendar" in user_message.lower():
+        upcoming_events = [
+            event for event in global_events
+            if datetime.fromisoformat(event["start"]).date() > datetime.now().date()
+        ]
+        if not upcoming_events:
+            return jsonify({"reply": "\nYou have no upcoming events."})
+        else:
+            # Format the events as a bulleted list with each event on a new line
+            formatted_upcoming = "\n".join(
+                [f"• {event['title']} on {datetime.fromisoformat(event['start']).strftime('%A, %b %d')} from {datetime.fromisoformat(event['start']).strftime('%I:%M %p')} to {datetime.fromisoformat(event['end']).strftime('%I:%M %p')}" 
+                 for event in upcoming_events]
+            )
+            return jsonify({"reply": f"\nHere are your upcoming events:\n{formatted_upcoming}"})
 
     # Call the ChatGPT API
     response = call_chatgpt_api(personalized_prompt)
@@ -176,9 +186,14 @@ def chat():
     try:
         reply = response["choices"][0]["message"]["content"].strip()
         return jsonify({"reply": reply})
+
     except (KeyError, IndexError) as e:
         print(f"Error extracting reply: {e}")
         return jsonify({"reply": "I'm having trouble processing that. Please try again later."}), 500
+
+
+
+
 
 
 
@@ -225,9 +240,14 @@ personas = load_personas()
 def index():
     return render_template("index.html")
 
+# Global variable to store events
+global_events = []
+
 @app.route('/generate_plan', methods=['POST'])
 @limiter.limit("5 per minute")
 def generate_plan():
+    global global_events  # Declare the global events variable
+
     data = request.get_json()
 
     # Check if a persona is set or passed in the request
@@ -263,10 +283,15 @@ def generate_plan():
         # Parse the response into events
         events = parse_chatgpt_response_to_events(response)
         print("Generated Events JSON:", events)  # Debug print
+
+        # Store events in the global variable
+        global_events = events
+
         return jsonify({"events": events}), 200
     except Exception as e:
         print(f"Error parsing ChatGPT response: {e}")
         return jsonify({"error": "Failed to parse ChatGPT response."}), 500
+
 
 
 def call_chatgpt_api(prompt):

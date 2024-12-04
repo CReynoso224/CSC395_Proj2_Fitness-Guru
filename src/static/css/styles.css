@@ -17,7 +17,8 @@
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(45deg, #48C6EF, #6F86D6); /* Gradient background */
+    background: linear-gradient(45deg, #48C6EF, #6F86D6);
+    /* Gradient background */
     background-size: cover;
     color: #333;
     display: flex;
@@ -50,7 +51,8 @@ h1 {
 }
 
 h1:hover {
-    transform: scale(1.05); /* Hover effect */
+    transform: scale(1.05);
+    /* Hover effect */
 }
 
 /* Paragraph Styles */
@@ -64,7 +66,8 @@ p {
 /* Button Styles */
 button {
     padding: 12px 24px;
-    background-color: #FF6347; /* Tomato */
+    background-color: #FF6347;
+    /* Tomato */
     border: none;
     color: white;
     font-size: 1.2em;
@@ -76,8 +79,10 @@ button {
 }
 
 button:hover {
-    background-color: #ff4500; /* Darker red */
-    transform: scale(1.05); /* Button hover effect */
+    background-color: #ff4500;
+    /* Darker red */
+    transform: scale(1.05);
+    /* Button hover effect */
 }
 
 .red-button {
@@ -89,7 +94,8 @@ button:hover {
 }
 
 /* Dropdown and Input Box Styling */
-#goalSelect, #otherInput {
+#goalSelect,
+#otherInput {
     width: 80%;
     max-width: 300px;
     padding: 12px;
@@ -101,12 +107,15 @@ button:hover {
     transition: background-color 0.3s ease;
 }
 
-#goalSelect:focus, #otherInput:focus {
-    background-color: #FFD700; /* Focused input field */
+#goalSelect:focus,
+#otherInput:focus {
+    background-color: #FFD700;
+    /* Focused input field */
 }
 
 /* Chatbot Container Styling */
 #chat-container {
+    white-space: pre-line;
     margin-top: 30px;
     padding: 20px;
     background-color: #f9f9f9;
@@ -118,12 +127,9 @@ button:hover {
     transition: transform 0.3s ease;
 }
 
-#chat-container:hover {
-    transform: scale(1.03);
-}
-
 #chat-messages {
-    max-height: 300px;
+    white-space: pre-line;
+    max-height: 500px;
     overflow-y: auto;
     margin-bottom: 15px;
     padding: 10px;
@@ -135,6 +141,7 @@ button:hover {
 
 #chat-messages p {
     margin: 5px 0;
+    white-space: pre-line;
 }
 
 /* User Input Styling */
@@ -147,7 +154,8 @@ button:hover {
 }
 
 #user-input:focus {
-    border-color: #FF6347; /* Red focus border */
+    border-color: #FF6347;
+    /* Red focus border */
 }
 
 /* Bio Section Styling */
@@ -176,6 +184,7 @@ button:hover {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -187,35 +196,45 @@ button:hover {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 90%; /* Adjust as needed to prevent compression */
-    min-height: 600px; /* Set a reasonable minimum height */
-    width: 100%; /* Allow the calendar to take up the full width */
-    margin: 20px auto; /* Center the calendar */
+    max-width: 90%;
+    /* Adjust as needed to prevent compression */
+    min-height: 600px;
+    /* Set a reasonable minimum height */
+    width: 100%;
+    /* Allow the calendar to take up the full width */
+    margin: 20px auto;
+    /* Center the calendar */
 }
 
 /* Ensure #page5 has enough space */
 #page5 {
-    width: 100%; /* Ensure the page uses full available space */
+    width: 100%;
+    /* Ensure the page uses full available space */
     display: block;
-    padding: 20px; /* Add some padding for spacing */
+    padding: 20px;
+    /* Add some padding for spacing */
     text-align: center;
 }
 
-#page5 h1, #page5 p {
-    margin: 0 auto; /* Center the elements */
+#page5 h1,
+#page5 p {
+    margin: 0 auto;
+    /* Center the elements */
 }
 
 /* Prevent the body flex layout from impacting child elements */
 body {
-    display: block; /* Change to block to avoid potential layout issues */
-    overflow-y: auto; /* Allow scrolling if needed */
+    display: block;
+    /* Change to block to avoid potential layout issues */
+    overflow-y: auto;
+    /* Allow scrolling if needed */
 }
-   
+
 #page5:not(.active) #calendar {
     display: none;
 }
 
 .page:not(.active) {
-    display: none !important; /* Ensure it overrides any other conflicting styles */
+    display: none !important;
+    /* Ensure it overrides any other conflicting styles */
 }
-
