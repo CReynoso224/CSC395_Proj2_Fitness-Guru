@@ -3,7 +3,8 @@ Project 2 - Fitness Guru
 
 ## About
 
-
+Fitness Guru is a comprehensive web platform designed to help users achieve their health and fitness goals by providing personalized workout plans, nutrition tracking, and welness insights.
+The product is designed for individuals across all fitness levels, offering customized guidance and tracking with intregated AI-powered suggesions and real-time progress monitoring.
 
 ## System Diagram:
 
