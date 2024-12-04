@@ -1,5 +1,6 @@
 # CSC395_Project2_README
-Project 2 - Fitness Guru
+
+## Fitness Guru
 
 ## About
 
