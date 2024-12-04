@@ -9,8 +9,7 @@ The product is designed for individuals across all fitness levels, offering cust
 
 ## System Diagram:
 
-[FitnessGuruPrototype](https://github.com/user-attachments/assets/bc49490c-8bf8-4777-8f53-831410109e81)
-
+![Screenshot 2024-12-04 at 18-16-08 FitnessGuruPrototype png (PNG Image 12028 × 9236 pixels) — Scaled (10%)](https://github.com/user-attachments/assets/a53c5ce6-11a9-4acf-b35e-56823fb5cccd)
 
 
 ## File Summary:
