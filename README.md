@@ -64,33 +64,88 @@ The product is designed for individuals across all fitness levels, offering cust
 
 ## Setup/How to run:
 
-To run locally:
+To run this web app locally, you need to have the following installed:
 
-1.  Install Docker and Docker Compose (if not already installed):
+    Docker: Docker is used to containerize the application and database.
+    Docker Compose: Docker Compose is used to manage multiple containers (Flask app and PostgreSQL database).
+    Python 3.9+ (optional for development): If you prefer to run the app without Docker, you can set it up locally using Python and pip.
 
-      - look up Docker Installation Guide
-      - look up Docker Compose Installation Guide
+Setting Up the Project Locally
 
-2.  Set Up Files:
+1. Clone the Repository
 
-      - Ensure you have all files (app.py, index.html, and related assets) in the same directory with the Dockerfile and docker-compose.yml.
+Clone the repository to your local machine using Git:
 
-3.  Set API Key:
+git clone https://github.com/yourusername/fitness-guru.git
+cd fitness-guru
 
-      - In your environment, set the CHATGPT_API_KEY using:
+2. Install Docker
 
-            export CHATGPT_API_KEY="your_openai_api_key"
+Make sure Docker and Docker Compose are installed on your machine. You can download them from the official website:
 
-4.  Start the Application:
+    Install Docker
+    Install Docker Compose
 
-      - Run the following command in the project directory:
+3. Set Up Environment Variables
 
-            docker-compose up
-  
-5.  Access the Application:
+The project requires a ChatGPT API key to interact with the OpenAI API.
 
-      - Open your browser and navigate to http://localhost:5000.
-      - This will launch the Flask application alongside a PostgreSQL database, enabling the full functionality of the web app.
+    Create a .env file in the root directory of the project.
+
+    Add your API key like this:
+
+    CHATGPT_API_KEY=your-api-key-here
+
+4. Build and Run the Docker Containers
+
+Once you have Docker and Docker Compose set up, you can build and run the containers using the following command:
+
+docker-compose up --build
+
+This will:
+
+    Build the Docker images (Flask app and PostgreSQL database).
+    Start the containers for the web app (flask_app) and database (postgres_db).
+
+5. Access the Application
+
+Once the containers are up and running, you can access the web app in your browser at:
+
+http://localhost:5000
+
+The Flask app will run on port 5000 by default.
+6. Stopping the Containers
+
+When you're done, you can stop the containers by running:
+
+docker-compose down
+
+7. Running Tests (Optional)
+
+If you want to run the unit tests to ensure everything is working as expected, use the following command:
+
+python -m unittest unitTest.py
+
+Troubleshooting
+
+    Missing Dependencies: If you get errors related to missing dependencies, you may need to rebuild the container:
+
+docker-compose up --build
+
+Database Connection Issues: Ensure the postgres_db container is running properly. If there are issues with the database connection, try restarting the containers:
+
+    docker-compose restart
+
+    .env File Not Found: Make sure the .env file exists in the root of your project and contains your OpenAI API key. Without it, the app won't be able to connect to the OpenAI API.
+
+Additional Notes:
+
+    Flask Debug Mode: The Flask app runs in debug mode by default. You can change the FLASK_DEBUG setting in the docker-compose.yml file to enable/disable debug mode.
+
+environment:
+  FLASK_DEBUG: 1  # Set to 0 for production
+
+Database: The project uses PostgreSQL as a database, which is automatically set up with Docker. The database is accessible inside the container at port 5432.
 
 ## Summary:
 
