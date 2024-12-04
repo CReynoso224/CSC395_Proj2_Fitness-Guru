@@ -15,12 +15,12 @@ Project 2 - Fitness Guru
 
 1.  Pages:
 
-Page 1: Intro with "Get Started" button.
-Page 2: Persona selection or custom goal input, with navigation options.
-Page 3: Chat interface for fitness and meal plan inquiries.
-Page 4: User bio display and fitness plan generation.
-Page 5: Fitness calendar using FullCalendar for event tracking.
-Page 6: Meal planner with text area for nutrition plans.
+- Page 1: Intro with "Get Started" button.
+- Page 2: Persona selection or custom goal input, with navigation options.
+- Page 3: Chat interface for fitness and meal plan inquiries.
+- Page 4: User bio display and fitness plan generation.
+- Page 5: Fitness calendar using FullCalendar for event tracking.
+- Page 6: Meal planner with text area for nutrition plans.
 
 2.  Navigation:
 
