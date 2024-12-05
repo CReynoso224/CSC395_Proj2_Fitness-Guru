@@ -85,6 +85,35 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+    
+        const deleteForm = document.getElementById('deleteForm');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent page reload
+
+            // Get event name from the form
+            const deleteEventName = document.getElementById('deleteEventName').value;
+
+            if (deleteEventName) {
+                // Find and remove the event
+                const events = calendar.getEvents(); // Get all events from the calendar
+                const eventToDelete = events.find(event => event.title === deleteEventName);
+
+                if (eventToDelete) {
+                    eventToDelete.remove(); // Remove the event
+                    alert(`Event "${deleteEventName}" deleted successfully.`);
+                } else {
+                    alert(`Event "${deleteEventName}" not found.`);
+                }
+
+                // Clear the form field
+                deleteForm.reset();
+            } else {
+                alert('Please enter the event name to delete.');
+            }
+        });
+    }
+    
 });
 
 
