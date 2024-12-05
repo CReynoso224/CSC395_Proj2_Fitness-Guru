@@ -58,6 +58,33 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
+    
+    
+    const eventForm = document.getElementById('eventForm');
+    if (eventForm) {
+        eventForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent page reload
+
+            // Get form values
+            const eventName = document.getElementById('eventName').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+
+            if (eventName && startTime && endTime) {
+                // Add event to FullCalendar
+                calendar.addEvent({
+                    title: eventName,
+                    start: startTime,
+                    end: endTime,
+                });
+
+                // Clear form fields
+                eventForm.reset();
+            } else {
+                alert('Please fill out all fields before adding the event.');
+            }
+        });
+    }
 });
 
 

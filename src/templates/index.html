@@ -78,6 +78,23 @@
     <div class="content">
         <h1>Fitness Calendar</h1>
         <p>Plan your fitness journey and track your events!</p>
+        
+        <div id="addEventForm">
+            <h3>Add an Event</h3>
+            <form id="eventForm">
+                <label for="eventName">Event Name:</label>
+                <input type="text" id="eventName" name="eventName" placeholder="Enter event name" required>
+
+                <label for="startTime">Start Time:</label>
+                <input type="datetime-local" id="startTime" name="startTime" required>
+
+                <label for="endTime">End Time:</label>
+                <input type="datetime-local" id="endTime" name="endTime" required>
+
+                <button type="submit">Add Event</button>
+            </form>
+        </div>
+        
         <div id="calendar"></div>
     </div>
     <button onclick="goToPage('page4')">Back</button>
