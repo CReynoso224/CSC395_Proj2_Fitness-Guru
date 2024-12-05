@@ -144,16 +144,38 @@ def chat():
     if current_persona and not persona_id:
         persona_id = current_persona.get("name")  # Use the current persona name if available
 
-    if not user_message:
-        return jsonify({"reply": "I didn't catch that. Can you try again?"})
-
     # Retrieve persona data
     persona_data = personas.get(persona_id, current_persona)  # Use current_persona if persona_id is not found
     if not persona_data:
         return jsonify({"reply": "Invalid persona selected. Please try again."})
 
+    # Check for calendar-related keywords in the user message
+    calendar_keywords = ["event", "calendar", "schedule", "appointment", "meeting"]
+    if any(keyword in user_message.lower() for keyword in calendar_keywords):
+        # Filter relevant calendar events
+        relevant_events = [
+            event for event in global_events
+            if datetime.fromisoformat(event["start"]).date() >= datetime.now().date()
+        ]
+
+        # Format events as a summary
+        if relevant_events:
+            event_details = "\n".join(
+                [
+                    f"{event['title']} on {datetime.fromisoformat(event['start']).strftime('%A, %b %d')} "
+                    f"from {datetime.fromisoformat(event['start']).strftime('%I:%M %p')} to {datetime.fromisoformat(event['end']).strftime('%I:%M %p')}"
+                    for event in relevant_events
+                ]
+            )
+            calendar_summary = f"Here are the upcoming events from the calendar:\n{event_details}\n"
+        else:
+            calendar_summary = "There are no upcoming events in the calendar."
+
+        # Embed calendar data into the prompt
+        user_message = f"{user_message}\n\n{calendar_summary}"
+
     # Generate the personalized prompt
-    base_prompt = "You are a fitness and wellness assistant."
+    base_prompt = "You are a helpful assistant who provides information and helps with user queries."
     persona_info = f"""
     This is the user's profile:
     - Name: {persona_data['name']}
@@ -165,22 +187,6 @@ def chat():
     - Motivations: {persona_data['motivations']}
     """
     personalized_prompt = f"{base_prompt}\n{persona_info}\n{user_message}\n"
-
-    # If the user asks about events or the calendar, just respond with that info
-    if "event" in user_message.lower() or "calendar" in user_message.lower():
-        upcoming_events = [
-            event for event in global_events
-            if datetime.fromisoformat(event["start"]).date() > datetime.now().date()
-        ]
-        if not upcoming_events:
-            return jsonify({"reply": "\nYou have no upcoming events."})
-        else:
-            # Format the events as a bulleted list with each event on a new line
-            formatted_upcoming = "\n".join(
-                [f"• {event['title']} on {datetime.fromisoformat(event['start']).strftime('%A, %b %d')} from {datetime.fromisoformat(event['start']).strftime('%I:%M %p')} to {datetime.fromisoformat(event['end']).strftime('%I:%M %p')}" 
-                 for event in upcoming_events]
-            )
-            return jsonify({"reply": f"\nHere are your upcoming events:\n{formatted_upcoming}"})
 
     # Call the ChatGPT API
     response = call_chatgpt_api(personalized_prompt)
@@ -195,6 +201,7 @@ def chat():
     except (KeyError, IndexError) as e:
         print(f"Error extracting reply: {e}")
         return jsonify({"reply": "I'm having trouble processing that. Please try again later."}), 500
+
 
 
 
