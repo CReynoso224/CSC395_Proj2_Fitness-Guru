@@ -251,21 +251,21 @@ global_events = []
 @app.route('/generate_plan', methods=['POST'])
 @limiter.limit("5 per minute")
 def generate_plan():
-    global global_events  # Declare the global events variable
+    global global_events 
 
     data = request.get_json()
 
-    # Check if a persona is set or passed in the request
+ 
     persona_id = data.get("persona", None)
     if current_persona and not persona_id:
-        persona_id = current_persona.get("name")  # Use the current persona name if available
+        persona_id = current_persona.get("name")
 
-    # Retrieve persona data
-    persona_data = personas.get(persona_id, current_persona)  # Use current_persona if persona_id is not found
+
+    persona_data = personas.get(persona_id, current_persona)
     if not persona_data:
         return jsonify({"error": "Invalid persona selected. Please try again."}), 400
 
-    # Construct the personalized prompt
+    # prompt
     base_prompt = "You are a fitness coach."
     persona_info = f"""
     Based on the following information, create a weekly fitness schedule. Each day should have activities with start and end times in the format 'HH:MM AM/PM to HH:MM AM/PM':
@@ -279,17 +279,17 @@ def generate_plan():
     """
     personalized_prompt = f"{base_prompt}\n{persona_info}"
 
-    # Call the ChatGPT API
+    # Call API
     response = call_chatgpt_api(personalized_prompt)
     if not response:
         return jsonify({"error": "Failed to generate plan. Check API connectivity or API key validity."}), 500
 
     try:
-        # Parse the response into events
+
         events = parse_chatgpt_response_to_events(response)
         print("Generated Events JSON:", events)  # Debug print
 
-        # Store events in the global variable
+
         global_events = events
 
         return jsonify({"events": events}), 200
@@ -316,7 +316,7 @@ def call_chatgpt_api(prompt):
         response = requests.post(api_url, headers=headers, json=data)
         response.raise_for_status()
         print("Raw response:", response.text)
-        return response.json()  # Return the entire JSON response
+        return response.json() 
     except requests.RequestException as e:
         print(f"API Request failed: {e}")
         if response is not None:
@@ -328,36 +328,35 @@ def parse_chatgpt_response_to_events(response):
     events = []
     current_date = datetime.now().date()
 
-    # Extract the `content` field from the response
+
     response_text = response.get("choices", [])[0].get("message", {}).get("content", "")
     if not response_text:
         raise ValueError("Response content is empty or improperly formatted.")
 
-    print("Response content:", response_text)  # Debugging print
+    print("Response content:", response_text) 
 
     for day in days:
         if day + ":" in response_text:
             try:
-                # Extract activities for the day
+    
                 day_section = response_text.split(day + ":")[1].split("\n\n")[0]
                 activities = day_section.strip().split("\n- ")
                 for activity in activities:
                     if ":" in activity or " - " in activity:
-                        # Handle different separators
                         if " - " in activity:
                             time_range, title = activity.split(" - ", 1)
                         else:
                             time_range, title = activity.split(": ", 1)
 
-                        # Clean up the time_range
+
                         time_range = time_range.replace("-", "").strip()
 
-                        # Split and parse start and end times
+
                         start_time, end_time = time_range.split(" to ")
                         start = datetime.strptime(f"{current_date} {start_time}", "%Y-%m-%d %I:%M %p")
                         end = datetime.strptime(f"{current_date} {end_time}", "%Y-%m-%d %I:%M %p")
 
-                        # Add event to the list
+
                         events.append({
                             "title": title.strip(),
                             "start": start.isoformat(),
@@ -366,7 +365,7 @@ def parse_chatgpt_response_to_events(response):
             except Exception as e:
                 print(f"Error parsing activities for {day}: {e}")
         else:
-            print(f"Day {day} not found in response_text")  # Debugging print
+            print(f"Day {day} not found in response_text")  # Debug
         current_date += timedelta(days=1)
 
     return events
