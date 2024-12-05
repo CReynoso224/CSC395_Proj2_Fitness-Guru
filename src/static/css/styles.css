@@ -197,13 +197,13 @@ button:hover {
     border-radius: 12px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     max-width: 90%;
-    /* Adjust as needed to prevent compression */
+    /* Max width for responsiveness */
     min-height: 600px;
-    /* Set a reasonable minimum height */
+    /* Ensure the calendar has a minimum height */
     width: 100%;
-    /* Allow the calendar to take up the full width */
     margin: 20px auto;
     /* Center the calendar */
+    display: block;
 }
 
 /* Ensure #page5 has enough space */
@@ -228,6 +228,45 @@ body {
     /* Change to block to avoid potential layout issues */
     overflow-y: auto;
     /* Allow scrolling if needed */
+}
+
+#calendar .calendar-event.completed-event {
+    background-color: #dcdcdc;
+    color: gray;
+    opacity: 0.7;
+    text-decoration: line-through;
+    font-style: italic;
+    pointer-events: none;
+}
+
+#calendar .calendar-event:hover {
+    background-color: #e0f7fa;
+    /* Light cyan on hover */
+    cursor: pointer;
+}
+
+/* Hover effect for completed events */
+#calendar .calendar-event.completed-event:hover {
+    background-color: #dcdcdc;
+    cursor: not-allowed;
+}
+
+
+#calendar .calendar-event {
+    background-color: #f0f8ff;
+    /* Light blue background */
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 4px 0;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+#calendar .completed-event {
+    text-decoration: line-through;
+    color: gray;
+    opacity: 0.6;
 }
 
 #page5:not(.active) #calendar {

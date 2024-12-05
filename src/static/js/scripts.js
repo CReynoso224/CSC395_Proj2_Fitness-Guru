@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
-    
-    
+
+
     const eventForm = document.getElementById('eventForm');
     if (eventForm) {
         eventForm.addEventListener('submit', function (e) {
@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    
-        const deleteForm = document.getElementById('deleteForm');
+
+    const deleteForm = document.getElementById('deleteForm');
     if (deleteForm) {
         deleteForm.addEventListener('submit', function (e) {
             e.preventDefault(); // Prevent page reload
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    
+
 });
 
 
@@ -156,7 +156,7 @@ const personas = {
 
 function sendPersonInfo() {
     const selectedPersona = document.getElementById('goalSelect').value;
-    
+
 
     if (!selectedPersona) {
         console.error("No persona selected.");
@@ -205,17 +205,17 @@ function sendPersonInfoNut() {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.response) { 
+            if (data.response) {
                 console.log("Nutrition plan received:", data.response);
                 displayNutritionText(data.response);
             } else {
                 console.error("Invalid nutrition plan data received from the server.");
-                displayNutritionText("No nutrition plan available. Please try again."); 
+                displayNutritionText("No nutrition plan available. Please try again.");
             }
         })
         .catch(error => {
             console.error("Error fetching nutrition plan:", error);
-            displayNutritionText("An error occurred while fetching the nutrition plan."); 
+            displayNutritionText("An error occurred while fetching the nutrition plan.");
         });
 }
 
@@ -554,6 +554,104 @@ function populateBioSection() {
         bioMotivations.textContent = "N/A";
     }
 }
+
+document.getElementById("markCompletedForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const eventName = document.getElementById("completeEventName").value.trim();
+    if (!eventName) {
+        alert("Please enter the event name.");
+        return;
+    }
+
+    // Send completion request to the server
+    try {
+        const response = await fetch("http://localhost:5000/calendar/mark_completed", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ eventName })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+            // Refresh the calendar to show updated status
+            loadCalendar();
+        } else {
+            alert(result.error);
+        }
+    } catch (error) {
+        console.error("Error marking event as completed:", error);
+        alert("An error occurred while marking the event as completed.");
+    }
+});
+
+async function loadCalendar() {
+    try {
+        const response = await fetch("http://localhost:5000/calendar/events");
+        const events = await response.json();
+
+        const calendarDiv = document.getElementById("calendar");
+        calendarDiv.innerHTML = ""; // Clear existing events
+
+        events.forEach(event => {
+            const eventElement = document.createElement("div");
+
+            // Format the event text
+            eventElement.textContent = `${event.title} (${event.start} to ${event.end})`;
+
+            // Apply a completed style if the event is marked as completed
+            if (event.completed) {
+                eventElement.classList.add("completed-event");
+            }
+
+            calendarDiv.appendChild(eventElement);
+        });
+    } catch (error) {
+        console.error("Error loading calendar events:", error);
+        alert("An error occurred while loading events.");
+    }
+}
+
+
+async function markEventCompleted(eventName) {
+    try {
+        const response = await fetch("http://localhost:5000/calendar/mark_completed", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ eventName })
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert(result.message);
+
+            // Find and update the specific event in the DOM
+            const calendarDiv = document.getElementById("calendar");
+            const eventElements = calendarDiv.querySelectorAll("div");
+
+            eventElements.forEach(eventElement => {
+                if (eventElement.textContent.includes(eventName)) {
+                    eventElement.classList.add("completed-event");
+                }
+            });
+        } else {
+            const error = await response.json();
+            alert(error.error);
+        }
+    } catch (error) {
+        console.error("Error marking event as completed:", error);
+        alert("An error occurred while marking the event as completed.");
+    }
+}
+
+
+// Load the calendar on page load
+document.addEventListener("DOMContentLoaded", loadCalendar);
+
+
 
 // Call this function when navigating to #page4
 document.addEventListener("DOMContentLoaded", () => {

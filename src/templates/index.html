@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,8 @@
 <body>
     <div id="page1" class="page active">
         <h1>Fitness Guru&trade;</h1>
-        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive while using our services).</p>
+        <p>The app for all your health needs. <br>(We are not liable for any misinformation you may or may not receive
+            while using our services).</p>
         <button onclick="goToPage('page2')">Get Started!</button>
     </div>
 
@@ -31,12 +33,12 @@
                 <option value="other">Other: Please Specify</option>
             </select>
             <input type="text" id="otherInput" placeholder="Please specify your goal" />
-    <!-- Button to save input -->
-    <button id="saveButton">Save Goal</button>
-    
-    <!-- Display feedback -->
-    <p id="statusMessage"></p>
-    
+            <!-- Button to save input -->
+            <button id="saveButton">Save Goal</button>
+
+            <!-- Display feedback -->
+            <p id="statusMessage"></p>
+
         </div>
         <div id="personaInfo"></div>
         <button class="red-button" onclick="goToPage('page1')">Back</button>
@@ -55,99 +57,112 @@
         <button onclick="goToPage('page4')">Go to Bio</button>
     </div>
 
-<div id="page4" class="page">
-    <h1>My Bio</h1>
-    <div id="bioSection">
-        <div class="bio-text">
-            <p><strong>Name:</strong> <span id="bioName">John Doe</span></p>
-            <p><strong>Age:</strong> <span id="bioAge">30</span></p>
-            <p><strong>Occupation:</strong> <span id="bioOccupation">Software Developer</span></p>
-            <p><strong>Lifestyle:</strong> <span id="bioLifestyle">Fitness, Health, Wellness</span></p>
-            <p><strong>Goals:</strong> <span id="bioGoals">Lose 10 pounds</span></p>
-            <p><strong>Pain Points:</strong> <span id="bioPainPoints">N/A</span></p>
-            <p><strong>Motivations:</strong> <span id="bioMotivations">N/A</span></p>
+    <div id="page4" class="page">
+        <h1>My Bio</h1>
+        <div id="bioSection">
+            <div class="bio-text">
+                <p><strong>Name:</strong> <span id="bioName">John Doe</span></p>
+                <p><strong>Age:</strong> <span id="bioAge">30</span></p>
+                <p><strong>Occupation:</strong> <span id="bioOccupation">Software Developer</span></p>
+                <p><strong>Lifestyle:</strong> <span id="bioLifestyle">Fitness, Health, Wellness</span></p>
+                <p><strong>Goals:</strong> <span id="bioGoals">Lose 10 pounds</span></p>
+                <p><strong>Pain Points:</strong> <span id="bioPainPoints">N/A</span></p>
+                <p><strong>Motivations:</strong> <span id="bioMotivations">N/A</span></p>
+            </div>
         </div>
+        <button class="red-button" onclick="goToPage('page3')">Back</button>
+        <button onclick="goToPage('page1')">Home</button>
+        <button class="red-button" onclick="sendPersonInfo()">Generate Plan</button>
+        <button onclick="goToPage('page5')">Calendar</button>
     </div>
-    <button class="red-button" onclick="goToPage('page3')">Back</button>
-    <button onclick="goToPage('page1')">Home</button>
-    <button class="red-button" onclick="sendPersonInfo()">Generate Plan</button>
-    <button onclick="goToPage('page5')">Calendar</button>
-</div>
 
-<div id="page5" class="page">
-    <div class="content">
-        <h1>Fitness Calendar</h1>
-        <p>Plan your fitness journey and track your events!</p>
-        
-        <div id="addEventForm">
-            <h3>Add an Event</h3>
-            <form id="eventForm">
-                <label for="eventName">Event Name:</label>
-                <input type="text" id="eventName" name="eventName" placeholder="Enter event name" required>
+    <div id="page5" class="page">
+        <div class="content">
+            <h1>Fitness Calendar</h1>
+            <p>Plan your fitness journey and track your events!</p>
 
-                <label for="startTime">Start Time:</label>
-                <input type="datetime-local" id="startTime" name="startTime" required>
+            <div id="addEventForm">
+                <h3>Add an Event</h3>
+                <form id="eventForm">
+                    <label for="eventName">Event Name:</label>
+                    <input type="text" id="eventName" name="eventName" placeholder="Enter event name" required>
 
-                <label for="endTime">End Time:</label>
-                <input type="datetime-local" id="endTime" name="endTime" required>
+                    <label for="startTime">Start Time:</label>
+                    <input type="datetime-local" id="startTime" name="startTime" required>
 
-                <button type="submit">Add Event</button>
-            </form>
+                    <label for="endTime">End Time:</label>
+                    <input type="datetime-local" id="endTime" name="endTime" required>
+
+                    <button type="submit">Add Event</button>
+                </form>
+            </div>
+
+            <div id="deleteEventForm">
+                <h3>Delete an Event</h3>
+                <form id="deleteForm">
+                    <label for="deleteEventName">Event Name:</label>
+                    <input type="text" id="deleteEventName" name="deleteEventName"
+                        placeholder="Enter event name to delete" required>
+
+                    <button type="submit">Delete Event</button>
+                </form>
+            </div>
+
+            <div id="markCompletedForm">
+                <h3>Mark Event as Completed</h3>
+                <form id="markCompletedForm">
+                    <label for="completeEventName">Event Name:</label>
+                    <input type="text" id="completeEventName" name="completeEventName" placeholder="Enter event name"
+                        required>
+                    <button type="submit">Mark as Completed</button>
+                </form>
+            </div>
+
+
+            <div id="calendar"></div>
         </div>
-        
-        <div id="deleteEventForm">
-            <h3>Delete an Event</h3>
-            <form id="deleteForm">
-                <label for="deleteEventName">Event Name:</label>
-                <input type="text" id="deleteEventName" name="deleteEventName" placeholder="Enter event name to delete" required>
+        <button onclick="goToPage('page4')">Back</button>
+        <button onclick="goToPage('page1')">Home</button>
+        <button class="red-button" onclick="goToPage('page6')">Next</button>
+    </div>
 
-                <button type="submit">Delete Event</button>
-            </form>
+    <div id="page6" class="page">
+        <div class="content">
+            <h1>Meal Planner</h1>
+            <p>Create a meal plan for the week</p>
+            <textarea id="nutritionPlanText" readonly style="width: 1013px; height: 807px; resize: none;"></textarea>
+
         </div>
-        
-        <div id="calendar"></div>
+        <button onclick="goToPage('page5')">Back</button>
+        <button onclick="goToPage('page1')">Home</button>
+        <button onclick="sendPersonInfoNut()">Generate Nutrition Plan</button>
+
     </div>
-    <button onclick="goToPage('page4')">Back</button>
-    <button onclick="goToPage('page1')">Home</button>
-    <button class="red-button" onclick="goToPage('page6')">Next</button>
-</div>
 
-<div id="page6" class="page">
-    <div class="content">
-        <h1>Meal Planner</h1>
-        <p>Create a meal plan for the week</p>
-        <textarea id="nutritionPlanText" readonly style="width: 1013px; height: 807px; resize: none;"></textarea>
-        
-    </div>
-    <button onclick="goToPage('page5')">Back</button>
-    <button onclick="goToPage('page1')">Home</button>
-    <button onclick="sendPersonInfoNut()">Generate Nutrition Plan</button>
+    <script src="../static/js/scripts.js" defer></script>
+    <script>
+        // Function to navigate between pages
+        function goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
 
-</div>
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
 
-<script src="../static/js/scripts.js" defer></script>
-<script>
-    // Function to navigate between pages
-    function goToPage(pageId) {
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
-
-        const targetPage = document.getElementById(pageId);
-        if (targetPage) {
-            targetPage.classList.add('active');
-
-            // Trigger FullCalendar update when showing #page5
-            if (pageId === 'page5' && window.calendar) {
-                window.calendar.updateSize();
+                // Trigger FullCalendar update when showing #page5
+                if (pageId === 'page5' && window.calendar) {
+                    window.calendar.updateSize();
+                }
             }
         }
-    }
 
-    // Make `goToPage` globally available
-    window.goToPage = goToPage;
-</script>
+        // Make `goToPage` globally available
+        window.goToPage = goToPage;
+    </script>
 
 
 </body>
+
 </html>

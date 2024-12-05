@@ -12,8 +12,12 @@ import os
 from flask import redirect, url_for
 import unittest
 
+
+
 app = Flask(__name__)
 CORS(app)
+completed_events = set()  # Global variable to store completed event names
+
 
 limiter = Limiter(get_remote_address, app=app)
 
@@ -81,20 +85,35 @@ def chat_with_calendar():
 
 @app.route("/calendar/events", methods=["GET"])
 def get_calendar_events():
-    # Example: Hardcoded or dynamic event data
+    # Include completion status
     events = [
         {
-            "title": "Morning Yoga",
-            "start": "2024-12-03T07:00:00",
-            "end": "2024-12-03T08:00:00"
-        },
-        {
-            "title": "Team Meeting",
-            "start": "2024-12-03T10:00:00",
-            "end": "2024-12-03T11:00:00"
+            "title": event["title"],
+            "start": event["start"],
+            "end": event["end"],
+            "completed": event["title"] in completed_events
         }
+        for event in global_events
+        
     ]
     return jsonify(events)
+
+
+import json
+
+def save_completed_events():
+    with open("completed_events.json", "w") as file:
+        json.dump(list(completed_events), file)
+
+def load_completed_events():
+    global completed_events
+    try:
+        with open("completed_events.json", "r") as file:
+            completed_events = set(json.load(file))
+    except FileNotFoundError:
+        completed_events = set()
+
+load_completed_events()
 
 
 
@@ -204,6 +223,29 @@ def chat():
 
 
 
+global_events = [
+    {"title": "Morning Yoga", "start": "2024-12-03T07:00:00", "end": "2024-12-03T08:00:00", "completed": False},
+    {"title": "Team Meeting", "start": "2024-12-03T10:00:00", "end": "2024-12-03T11:00:00", "completed": False},
+]
+
+@app.route("/calendar/mark_completed", methods=["POST"])
+def mark_event_completed():
+    global completed_events  # Declare the variable as global
+
+    data = request.get_json()
+    event_name = data.get("eventName", "").strip()
+
+    if not event_name:
+        return jsonify({"error": "Event name is required"}), 400
+
+    # Verify event exists
+    event_exists = any(event["title"] == event_name for event in global_events)
+    if not event_exists:
+        return jsonify({"error": f"No event found with the name '{event_name}'."}), 404
+
+    # Mark the event as completed
+    completed_events.add(event_name)
+    return jsonify({"message": f"Event '{event_name}' marked as completed."}), 200
 
 
 
