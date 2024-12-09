@@ -41,11 +41,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r src/requirements.txt
 
-    - name: Run unit tests
+    
+        - name: Run unit tests
       env:
         DATABASE_URL: postgresql://testuser:testpassword@localhost:5432/testdb
+      working-directory: src
       run: |
-        python -m unittest discover -s src -p '*Test.py'
+        python -m unittest discover -s . -p '*Test.py'
+
 
 
     - name: Lint with Flake8
