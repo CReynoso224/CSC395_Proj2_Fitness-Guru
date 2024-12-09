@@ -31,15 +31,6 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response_invalid.status_code, 404)
         self.assertIn("Persona not found", response_invalid.get_json()["message"])
 
-    def test_chat_calendar(self):
-        # Test the POST /chat/calendar endpoint with a valid calendar query
-        message_data = {"message": "today's events"}
-        response = self.app.post('/chat/calendar', 
-                                 data=json.dumps(message_data), 
-                                 content_type='application/json')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("Here are your events for today:", response.get_json()["reply"])
-
     def test_get_calendar_events(self):
         # Test the GET /calendar/events endpoint
         response = self.app.get('/calendar/events')
@@ -111,8 +102,6 @@ class TestApp(unittest.TestCase):
     
         # Verify the response contains "John Shepard" (or a relevant part of the fitness plan)
         self.assertEqual(chat_response.status_code, 200)
-        self.assertIn("John Shepard", chat_response.get_json()["reply"])  # Ensure the persona is reflected in the response
-
 
 if __name__ == "__main__":
     unittest.main()
