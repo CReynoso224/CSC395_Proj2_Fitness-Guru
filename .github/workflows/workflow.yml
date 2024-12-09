@@ -45,7 +45,7 @@ jobs:
       env:
         DATABASE_URL: postgresql://testuser:testpassword@localhost:5432/testdb
       run: |
-        python -m unittest discover -s src -p '*_test.py'
+        python -m unittest discover -s src -p '*Test.py'
 
 
     - name: Lint with Flake8
@@ -65,7 +65,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.12'
 
     - name: Build and run application
       run: |
