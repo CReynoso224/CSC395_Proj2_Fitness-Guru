@@ -85,6 +85,14 @@ jobs:
       run: |
         docker-compose -f src/docker-compose.yml up --build -d
 
+    - name: Wait for Flask app to be ready
+      run: |
+        until curl --silent --fail http://localhost:5000/; do
+          echo "Waiting for Flask to be available..."
+          sleep 2
+        done
+
+
     - name: Verify deployment
       run: |
         curl --fail http://localhost:5000/ || exit 1
