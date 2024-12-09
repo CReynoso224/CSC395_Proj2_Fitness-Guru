@@ -12,7 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            events: [] // Placeholder for events
+            events: [], // Placeholder for events
+
+            // Add eventClick callback with toggle functionality
+            eventClick: function (info) {
+                // Prevent default behavior (e.g., navigating to a URL if event has one)
+                info.jsEvent.preventDefault();
+
+                // Toggle the 'greyed-out' class to grey out or un-grey out the event
+                info.el.classList.toggle('greyed-out');
+            }
         });
 
         // Save the calendar globally so it can be updated when switching pages
@@ -58,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
-
 
     const eventForm = document.getElementById('eventForm');
     if (eventForm) {
@@ -113,8 +121,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
 });
+
+
 
 
 
@@ -555,39 +564,6 @@ function populateBioSection() {
     }
 }
 
-document.getElementById("markCompletedForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const eventName = document.getElementById("completeEventName").value.trim();
-    if (!eventName) {
-        alert("Please enter the event name.");
-        return;
-    }
-
-    // Send completion request to the server
-    try {
-        const response = await fetch("http://localhost:5000/calendar/mark_completed", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ eventName })
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            alert(result.message);
-            // Refresh the calendar to show updated status
-            loadCalendar();
-        } else {
-            alert(result.error);
-        }
-    } catch (error) {
-        console.error("Error marking event as completed:", error);
-        alert("An error occurred while marking the event as completed.");
-    }
-});
-
 async function loadCalendar() {
     try {
         const response = await fetch("http://localhost:5000/calendar/events");
@@ -616,40 +592,6 @@ async function loadCalendar() {
 }
 
 
-async function markEventCompleted(eventName) {
-    try {
-        const response = await fetch("http://localhost:5000/calendar/mark_completed", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ eventName })
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            alert(result.message);
-
-            // Find and update the specific event in the DOM
-            const calendarDiv = document.getElementById("calendar");
-            const eventElements = calendarDiv.querySelectorAll("div");
-
-            eventElements.forEach(eventElement => {
-                if (eventElement.textContent.includes(eventName)) {
-                    eventElement.classList.add("completed-event");
-                }
-            });
-        } else {
-            const error = await response.json();
-            alert(error.error);
-        }
-    } catch (error) {
-        console.error("Error marking event as completed:", error);
-        alert("An error occurred while marking the event as completed.");
-    }
-}
-
-
-// Load the calendar on page load
-document.addEventListener("DOMContentLoaded", loadCalendar);
 
 
 

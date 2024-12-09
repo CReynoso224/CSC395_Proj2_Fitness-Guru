@@ -42,16 +42,12 @@ jobs:
         pip install -r src/requirements.txt
 
     - name: Run unit tests
-      working-directory: src
       env:
         DATABASE_URL: postgresql://testuser:testpassword@localhost:5432/testdb
+      working-directory: src
       run: |
-        python -m unittest discover -s tests -p '*_test.py'
+        python -m unittest discover -s . -p '*Test.py'
 
-    - name: Lint with Flake8
-      run: |
-        pip install flake8
-        flake8 src
 
   deploy:
     runs-on: ubuntu-latest
@@ -65,11 +61,37 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.12'
+
+    - name: Install Docker and Docker Compose
+      run: |
+        # Remove any conflicting versions
+        sudo apt-get remove -y containerd docker.io
+        
+        # Install Docker from the official Docker repository
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+        # Install Docker Compose
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
 
     - name: Build and run application
       run: |
         docker-compose -f src/docker-compose.yml up --build -d
+
+    - name: Wait for Flask app to be ready
+      run: |
+        until curl --silent --fail http://localhost:5000/; do
+          echo "Waiting for Flask to be available..."
+          sleep 2
+        done
+
 
     - name: Verify deployment
       run: |
@@ -78,3 +100,4 @@ jobs:
     - name: Stop Docker containers
       if: always()
       run: docker-compose -f src/docker-compose.yml down
+

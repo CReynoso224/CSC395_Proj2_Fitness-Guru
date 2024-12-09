@@ -119,9 +119,14 @@ load_completed_events()
 
 
 def load_personas():
-    """Load personas from a JSON file."""
-    with open("personas.json", "r") as file:
-        return json.load(file)
+    # Get the directory of the current file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the full path to personas.json
+    file_path = os.path.join(current_dir, "personas.json")
+    
+    with open(file_path, "r") as file:
+        return json.load(file)  # Assuming you are loading JSON data
+
 
 personas = load_personas()
 
@@ -464,4 +469,4 @@ def nutrition_plan():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
