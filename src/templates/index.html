@@ -46,7 +46,6 @@
     </div>
 
     <div id="page3" class="page">
-        <h1>Page 3</h1>
         <div id="chat-container">
             <h2>Chat with Fitness Guru</h2>
             <div id="chat-messages"></div>
@@ -108,17 +107,6 @@
                 </form>
             </div>
 
-            <div id="markCompletedForm">
-                <h3>Mark Event as Completed</h3>
-                <form id="markCompletedForm">
-                    <label for="completeEventName">Event Name:</label>
-                    <input type="text" id="completeEventName" name="completeEventName" placeholder="Enter event name"
-                        required>
-                    <button type="submit">Mark as Completed</button>
-                </form>
-            </div>
-
-
             <div id="calendar"></div>
         </div>
         <button onclick="goToPage('page4')">Back</button>
@@ -136,7 +124,6 @@
         <button onclick="goToPage('page5')">Back</button>
         <button onclick="goToPage('page1')">Home</button>
         <button onclick="sendPersonInfoNut()">Generate Nutrition Plan</button>
-
     </div>
 
     <script src="../static/js/scripts.js" defer></script>
@@ -161,8 +148,6 @@
         // Make `goToPage` globally available
         window.goToPage = goToPage;
     </script>
-
-
 </body>
 
 </html>

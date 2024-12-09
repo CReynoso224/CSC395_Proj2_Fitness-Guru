@@ -230,47 +230,25 @@ body {
     /* Allow scrolling if needed */
 }
 
-#calendar .calendar-event.completed-event {
-    background-color: #dcdcdc;
-    color: gray;
-    opacity: 0.7;
-    text-decoration: line-through;
-    font-style: italic;
-    pointer-events: none;
-}
-
 #calendar .calendar-event:hover {
     background-color: #e0f7fa;
     /* Light cyan on hover */
     cursor: pointer;
 }
 
-/* Hover effect for completed events */
-#calendar .calendar-event.completed-event:hover {
+/* Greys out clicked event */
+.greyed-out {
     background-color: #dcdcdc;
-    cursor: not-allowed;
-}
-
-
-#calendar .calendar-event {
-    background-color: #f0f8ff;
-    /* Light blue background */
-    border: 1px solid #ccc;
-    padding: 8px;
-    border-radius: 4px;
-    margin: 4px 0;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease;
-}
-
-#calendar .completed-event {
-    text-decoration: line-through;
+    /* Light grey background */
     color: gray;
+    /* Grey text */
     opacity: 0.6;
+    /* Reduce opacity */
 }
 
-#page5:not(.active) #calendar {
-    display: none;
+.greyed-out .fc-event-title {
+    text-decoration: line-through;
+    /* Strike through the event title */
 }
 
 .page:not(.active) {
